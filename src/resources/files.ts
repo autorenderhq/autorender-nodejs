@@ -71,7 +71,7 @@ export interface FileListItem {
   /**
    * Thumbnail CDN URL
    */
-  thumbanil?: string;
+  thumbnail?: string;
 
   url?: string;
 
