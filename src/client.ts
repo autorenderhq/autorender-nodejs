@@ -20,11 +20,11 @@ import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import {
-  File,
   FileDeleteResponse,
   FileListItem,
   FileListParams,
   FileListResponse,
+  FileObject,
   FileRenameParams,
   FileRenameResponse,
   FileUpdateParams,
@@ -68,7 +68,7 @@ export interface ClientOptions {
   /**
    * Defaults to process.env['AUTORENDER_API_KEY'].
    */
-  apiKey?: string | undefined;
+  apiKey?: string | null | undefined;
 
   /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
@@ -143,7 +143,7 @@ export interface ClientOptions {
  * API Client for interfacing with the Autorender API.
  */
 export class Autorender {
-  apiKey: string;
+  apiKey: string | null;
 
   baseURL: string;
   maxRetries: number;
@@ -160,7 +160,7 @@ export class Autorender {
   /**
    * API Client for interfacing with the Autorender API.
    *
-   * @param {string | undefined} [opts.apiKey=process.env['AUTORENDER_API_KEY'] ?? undefined]
+   * @param {string | null | undefined} [opts.apiKey=process.env['AUTORENDER_API_KEY'] ?? null]
    * @param {string} [opts.baseURL=process.env['AUTORENDER_BASE_URL'] ?? https://upload.autorender.io] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
@@ -171,15 +171,9 @@ export class Autorender {
    */
   constructor({
     baseURL = readEnv('AUTORENDER_BASE_URL'),
-    apiKey = readEnv('AUTORENDER_API_KEY'),
+    apiKey = readEnv('AUTORENDER_API_KEY') ?? null,
     ...opts
   }: ClientOptions = {}) {
-    if (apiKey === undefined) {
-      throw new Errors.AutorenderError(
-        "The AUTORENDER_API_KEY environment variable is missing or empty; either provide it, or instantiate the Autorender client with an apiKey option, like new Autorender({ apiKey: 'My API Key' }).",
-      );
-    }
-
     const options: ClientOptions = {
       apiKey,
       ...opts,
@@ -237,10 +231,22 @@ export class Autorender {
   }
 
   protected validateHeaders({ values, nulls }: NullableHeaders) {
-    return;
+    if (this.apiKey && values.get('authorization')) {
+      return;
+    }
+    if (nulls.has('authorization')) {
+      return;
+    }
+
+    throw new Error(
+      'Could not resolve authentication method. Expected the apiKey to be set. Or for the "Authorization" headers to be explicitly omitted',
+    );
   }
 
   protected async authHeaders(opts: FinalRequestOptions): Promise<NullableHeaders | undefined> {
+    if (this.apiKey == null) {
+      return undefined;
+    }
     return buildHeaders([{ Authorization: `Bearer ${this.apiKey}` }]);
   }
 
@@ -814,8 +820,8 @@ export declare namespace Autorender {
 
   export {
     Files as Files,
-    type File as File,
     type FileListItem as FileListItem,
+    type FileObject as FileObject,
     type FileUpdateResponse as FileUpdateResponse,
     type FileListResponse as FileListResponse,
     type FileDeleteResponse as FileDeleteResponse,
