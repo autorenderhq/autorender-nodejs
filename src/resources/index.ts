@@ -21,4 +21,10 @@ export {
   type FolderListParams,
   type FolderRenameParams,
 } from './folders';
-export { Uploads, type Upload, type UploadData, type UploadCreateParams } from './uploads';
+export {
+  Uploads,
+  type Upload,
+  type UploadData,
+  type UploadCreateParams,
+  type UploadCreateFromURLParams,
+} from './uploads';
