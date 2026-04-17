@@ -2,28 +2,16 @@
 
 Types:
 
-- <code><a href="./src/resources/uploads/uploads.ts">Upload</a></code>
-- <code><a href="./src/resources/uploads/uploads.ts">UploadData</a></code>
-- <code><a href="./src/resources/uploads/uploads.ts">UploadGenerateTokenResponse</a></code>
+- <code><a href="./src/resources/uploads.ts">Upload</a></code>
+- <code><a href="./src/resources/uploads.ts">UploadData</a></code>
+- <code><a href="./src/resources/uploads.ts">UploadGenerateTokenResponse</a></code>
 
 Methods:
 
-- <code title="post /api/v1/uploads">client.uploads.<a href="./src/resources/uploads/uploads.ts">create</a>({ ...params }) -> Upload</code>
-- <code title="post /api/v1/uploads/remote">client.uploads.<a href="./src/resources/uploads/uploads.ts">createFromURL</a>({ ...params }) -> Upload</code>
-- <code title="post /api/v1/uploads/{token}">client.uploads.<a href="./src/resources/uploads/uploads.ts">createWithToken</a>(token, body) -> Upload</code>
-- <code title="post /api/v1/generate-token">client.uploads.<a href="./src/resources/uploads/uploads.ts">generateToken</a>({ ...params }) -> UploadGenerateTokenResponse</code>
-
-## Multipart
-
-Types:
-
-- <code><a href="./src/resources/uploads/multipart.ts">Session</a></code>
-
-Methods:
-
-- <code title="post /api/v1/multipart/complete">client.uploads.multipart.<a href="./src/resources/uploads/multipart.ts">complete</a>({ ...params }) -> Upload</code>
-- <code title="post /api/v1/multipart/start">client.uploads.multipart.<a href="./src/resources/uploads/multipart.ts">start</a>({ ...params }) -> Session</code>
-- <code title="put /api/v1/multipart/parts">client.uploads.multipart.<a href="./src/resources/uploads/multipart.ts">uploadPart</a>(body) -> void</code>
+- <code title="post /api/v1/uploads">client.uploads.<a href="./src/resources/uploads.ts">create</a>({ ...params }) -> Upload</code>
+- <code title="post /api/v1/uploads/remote">client.uploads.<a href="./src/resources/uploads.ts">createFromURL</a>({ ...params }) -> Upload</code>
+- <code title="post /api/v1/uploads/{token}">client.uploads.<a href="./src/resources/uploads.ts">createWithToken</a>(token, body) -> Upload</code>
+- <code title="post /api/v1/generate-token">client.uploads.<a href="./src/resources/uploads.ts">generateToken</a>({ ...params }) -> UploadGenerateTokenResponse</code>
 
 # Files
 
