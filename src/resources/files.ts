@@ -12,7 +12,7 @@ export class Files extends APIResource {
   /**
    * Retrieve detailed information about a specific file by its file number.
    */
-  retrieve(fileNo: string, options?: RequestOptions): APIPromise<File> {
+  retrieve(fileNo: string, options?: RequestOptions): APIPromise<FileObject> {
     return this._client.get(path`/api/v1/files/${fileNo}`, options);
   }
 
@@ -51,13 +51,42 @@ export class Files extends APIResource {
   }
 }
 
-export interface File {
-  data?: File.Data;
+export interface FileListItem {
+  created_at?: string;
+
+  extension?: string;
+
+  file_no?: string;
+
+  file_size?: number;
+
+  format?: string;
+
+  height?: number | null;
+
+  name?: string;
+
+  path?: string;
+
+  /**
+   * Thumbnail CDN URL
+   */
+  thumbanil?: string;
+
+  url?: string;
+
+  width?: number | null;
+
+  workspace_no?: string;
+}
+
+export interface FileObject {
+  data?: FileObject.Data;
 
   success?: boolean;
 }
 
-export namespace File {
+export namespace FileObject {
   export interface Data {
     id?: string;
 
@@ -71,7 +100,7 @@ export namespace File {
 
     file_no?: string;
 
-    folder?: unknown;
+    folder?: string | null;
 
     format?: string;
 
@@ -103,35 +132,6 @@ export namespace File {
       workspace_no?: string;
     }
   }
-}
-
-export interface FileListItem {
-  created_at?: string;
-
-  extension?: string;
-
-  file_no?: string;
-
-  file_size?: number;
-
-  format?: string;
-
-  height?: number | null;
-
-  name?: string;
-
-  path?: string;
-
-  /**
-   * Thumbnail CDN URL
-   */
-  thumbanil?: string;
-
-  url?: string;
-
-  width?: number | null;
-
-  workspace_no?: string;
 }
 
 export interface FileUpdateResponse {
@@ -290,8 +290,8 @@ export interface FileRenameParams {
 
 export declare namespace Files {
   export {
-    type File as File,
     type FileListItem as FileListItem,
+    type FileObject as FileObject,
     type FileUpdateResponse as FileUpdateResponse,
     type FileListResponse as FileListResponse,
     type FileDeleteResponse as FileDeleteResponse,

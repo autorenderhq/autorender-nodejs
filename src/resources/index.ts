@@ -2,8 +2,8 @@
 
 export {
   Files,
-  type File,
   type FileListItem,
+  type FileObject,
   type FileUpdateResponse,
   type FileListResponse,
   type FileDeleteResponse,
