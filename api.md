@@ -8,6 +8,7 @@ Types:
 Methods:
 
 - <code title="post /api/v1/uploads">client.uploads.<a href="./src/resources/uploads.ts">create</a>({ ...params }) -> Upload</code>
+- <code title="post /api/v1/uploads/remote">client.uploads.<a href="./src/resources/uploads.ts">createFromURL</a>({ ...params }) -> Upload</code>
 
 # Files
 

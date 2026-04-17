@@ -17,6 +17,13 @@ export class Uploads extends APIResource {
       multipartFormRequestOptions({ body, ...options }, this._client),
     );
   }
+
+  /**
+   * Fetch a file from a remote URL and store it in your AutoRender workspace.
+   */
+  createFromURL(body: UploadCreateFromURLParams, options?: RequestOptions): APIPromise<Upload> {
+    return this._client.post('/api/v1/uploads/remote', { body, ...options });
+  }
 }
 
 export interface Upload {
@@ -122,10 +129,53 @@ export interface UploadCreateParams {
   transform?: string;
 }
 
+export interface UploadCreateFromURLParams {
+  /**
+   * The HTTP or HTTPS URL of the image to download
+   */
+  remote_url: string;
+
+  /**
+   * Custom identifier for tracking the upload
+   */
+  custom_id?: string;
+
+  /**
+   * Folder path where the file should be stored
+   */
+  folder?: string;
+
+  /**
+   * JSON string containing custom metadata object
+   */
+  metadata?: string;
+
+  /**
+   * Set to 'true' to generate a random suffix for the filename
+   */
+  random_prefix?: string;
+
+  /**
+   * Comma-separated list of tags to apply to the file
+   */
+  tags?: string;
+
+  /**
+   * Transformation string to apply during upload (e.g., w_800,h_600,c_crop)
+   */
+  transform?: string;
+
+  /**
+   * URL to receive webhook notification when upload completes
+   */
+  webhook_url?: string;
+}
+
 export declare namespace Uploads {
   export {
     type Upload as Upload,
     type UploadData as UploadData,
     type UploadCreateParams as UploadCreateParams,
+    type UploadCreateFromURLParams as UploadCreateFromURLParams,
   };
 }

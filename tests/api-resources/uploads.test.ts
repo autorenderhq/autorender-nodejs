@@ -34,4 +34,28 @@ describe('resource uploads', () => {
       transform: 'transform',
     });
   });
+
+  test('createFromURL: only required params', async () => {
+    const responsePromise = client.uploads.createFromURL({ remote_url: 'remote_url' });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  test('createFromURL: required and optional params', async () => {
+    const response = await client.uploads.createFromURL({
+      remote_url: 'remote_url',
+      custom_id: 'custom_id',
+      folder: 'folder',
+      metadata: 'metadata',
+      random_prefix: 'random_prefix',
+      tags: 'tags',
+      transform: 'transform',
+      webhook_url: 'webhook_url',
+    });
+  });
 });

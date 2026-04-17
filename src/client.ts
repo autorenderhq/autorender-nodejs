@@ -40,7 +40,13 @@ import {
   FolderRenameParams,
   Folders,
 } from './resources/folders';
-import { Upload, UploadCreateParams, UploadData, Uploads as UploadsAPIUploads } from './resources/uploads';
+import {
+  Upload,
+  UploadCreateFromURLParams,
+  UploadCreateParams,
+  UploadData,
+  Uploads as UploadsAPIUploads,
+} from './resources/uploads';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -794,6 +800,7 @@ export declare namespace Autorender {
     type Upload as Upload,
     type UploadData as UploadData,
     type UploadCreateParams as UploadCreateParams,
+    type UploadCreateFromURLParams as UploadCreateFromURLParams,
   };
 
   export {
