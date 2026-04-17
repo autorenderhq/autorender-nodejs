@@ -8,8 +8,8 @@
     "moduleResolution": "node",
     "esModuleInterop": true,
     "paths": {
-      "autorender/*": ["./src/*"],
-      "autorender": ["./src/index.ts"]
+      "@autorender/sdk/*": ["./src/*"],
+      "@autorender/sdk": ["./src/index.ts"]
     },
     "noEmit": true,
 

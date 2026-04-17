@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import Autorender, { toFile } from 'autorender';
+import Autorender, { toFile } from '@autorender/sdk';
 
 const client = new Autorender({
   apiKey: 'My API Key',

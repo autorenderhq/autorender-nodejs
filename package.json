@@ -1,5 +1,5 @@
 {
-  "name": "autorender",
+  "name": "@autorender/sdk",
   "version": "0.0.1",
   "description": "The official TypeScript library for the Autorender API",
   "author": "Autorender <support@autorender.io>",
