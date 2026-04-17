@@ -4,11 +4,9 @@ export {
   Files,
   type FileListItem,
   type FileObject,
-  type FileUpdateResponse,
   type FileListResponse,
   type FileDeleteResponse,
   type FileRenameResponse,
-  type FileUpdateParams,
   type FileListParams,
   type FileRenameParams,
 } from './files';
@@ -23,12 +21,4 @@ export {
   type FolderListParams,
   type FolderRenameParams,
 } from './folders';
-export {
-  Uploads,
-  type Upload,
-  type UploadData,
-  type UploadGenerateTokenResponse,
-  type UploadCreateParams,
-  type UploadCreateFromURLParams,
-  type UploadGenerateTokenParams,
-} from './uploads';
+export { Uploads, type Upload, type UploadData, type UploadCreateParams } from './uploads';

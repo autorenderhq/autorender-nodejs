@@ -27,8 +27,6 @@ import {
   FileObject,
   FileRenameParams,
   FileRenameResponse,
-  FileUpdateParams,
-  FileUpdateResponse,
   Files,
 } from './resources/files';
 import {
@@ -42,15 +40,7 @@ import {
   FolderRenameParams,
   Folders,
 } from './resources/folders';
-import {
-  Upload,
-  UploadCreateFromURLParams,
-  UploadCreateParams,
-  UploadData,
-  UploadGenerateTokenParams,
-  UploadGenerateTokenResponse,
-  Uploads as UploadsAPIUploads,
-} from './resources/uploads';
+import { Upload, UploadCreateParams, UploadData, Uploads as UploadsAPIUploads } from './resources/uploads';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -781,17 +771,8 @@ export class Autorender {
 
   static toFile = Uploads.toFile;
 
-  /**
-   * Upload files to your workspace
-   */
   uploads: API.Uploads = new API.Uploads(this);
-  /**
-   * Manage files in your workspace
-   */
   files: API.Files = new API.Files(this);
-  /**
-   * Manage folder structure
-   */
   folders: API.Folders = new API.Folders(this);
 }
 
@@ -812,21 +793,16 @@ export declare namespace Autorender {
     UploadsAPIUploads as Uploads,
     type Upload as Upload,
     type UploadData as UploadData,
-    type UploadGenerateTokenResponse as UploadGenerateTokenResponse,
     type UploadCreateParams as UploadCreateParams,
-    type UploadCreateFromURLParams as UploadCreateFromURLParams,
-    type UploadGenerateTokenParams as UploadGenerateTokenParams,
   };
 
   export {
     Files as Files,
     type FileListItem as FileListItem,
     type FileObject as FileObject,
-    type FileUpdateResponse as FileUpdateResponse,
     type FileListResponse as FileListResponse,
     type FileDeleteResponse as FileDeleteResponse,
     type FileRenameResponse as FileRenameResponse,
-    type FileUpdateParams as FileUpdateParams,
     type FileListParams as FileListParams,
     type FileRenameParams as FileRenameParams,
   };
