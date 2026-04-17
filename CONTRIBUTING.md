@@ -55,12 +55,12 @@ $ cd autorender-node
 # With yarn
 $ yarn link
 $ cd ../my-package
-$ yarn link autorender
+$ yarn link @autorender/sdk
 
 # With pnpm
 $ pnpm link --global
 $ cd ../my-package
-$ pnpm link --global autorender
+$ pnpm link --global @autorender/sdk
 ```
 
 ## Running tests
