@@ -1,5 +1,5 @@
-import { multipartFormRequestOptions, createForm } from '@autorender/sdk/internal/uploads';
-import { toFile } from '@autorender/sdk/core/uploads';
+import { multipartFormRequestOptions, createForm } from '@autorender/nodejs/internal/uploads';
+import { toFile } from '@autorender/nodejs/core/uploads';
 
 describe('form data validation', () => {
   test('valid values do not error', async () => {

@@ -5,8 +5,8 @@
   "compilerOptions": {
     "rootDir": "./dist/src",
     "paths": {
-      "@autorender/sdk/*": ["./dist/src/*"],
-      "@autorender/sdk": ["./dist/src/index.ts"]
+      "@autorender/nodejs/*": ["./dist/src/*"],
+      "@autorender/nodejs": ["./dist/src/index.ts"]
     },
     "noEmit": false,
     "declaration": true,
