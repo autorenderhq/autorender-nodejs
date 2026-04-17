@@ -5,28 +5,29 @@ import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
-/**
- * Manage files in your workspace
- */
 export class Files extends APIResource {
   /**
-   * Retrieve detailed information about a specific file by its file number.
+   * Retrieve detailed information about a file by numeric file id (`file_no`).
+   *
+   * @example
+   * ```ts
+   * const fileObject = await client.files.retrieve(
+   *   '2353377462',
+   * );
+   * ```
    */
   retrieve(fileNo: string, options?: RequestOptions): APIPromise<FileObject> {
     return this._client.get(path`/api/v1/files/${fileNo}`, options);
   }
 
   /**
-   * Update a file's tags and/or metadata. Tags are merged — add_tags appends,
-   * remove_tags removes. Metadata is merged with existing values.
-   */
-  update(fileNo: string, body: FileUpdateParams, options?: RequestOptions): APIPromise<FileUpdateResponse> {
-    return this._client.patch(path`/api/v1/files/${fileNo}`, { body, ...options });
-  }
-
-  /**
-   * Paginated list of files in the workspace. Filter by folder, path prefix, name,
-   * or tags. Sort by various fields.
+   * Paginated list of files in the workspace. Filter by folder, sort by field and
+   * order, and page through results.
+   *
+   * @example
+   * ```ts
+   * const files = await client.files.list();
+   * ```
    */
   list(
     query: FileListParams | null | undefined = {},
@@ -36,24 +37,42 @@ export class Files extends APIResource {
   }
 
   /**
-   * Permanently delete a file from the workspace.
+   * Permanently delete a file. No request body is required.
+   *
+   * @example
+   * ```ts
+   * const file = await client.files.delete('2338056701');
+   * ```
    */
   delete(fileNo: string, options?: RequestOptions): APIPromise<FileDeleteResponse> {
     return this._client.delete(path`/api/v1/files/${fileNo}`, options);
   }
 
   /**
-   * Rename a file. The server preserves the file extension (e.g., supplying
-   * "product" renames to "product.jpg").
+   * Rename a file. The API may preserve or normalize the file extension (e.g. `demo`
+   * → `demo.png`).
+   *
+   * @example
+   * ```ts
+   * const response = await client.files.rename('2338045312', {
+   *   name: 'demo',
+   * });
+   * ```
    */
   rename(fileNo: string, body: FileRenameParams, options?: RequestOptions): APIPromise<FileRenameResponse> {
     return this._client.patch(path`/api/v1/files/${fileNo}/rename`, { body, ...options });
   }
 }
 
+/**
+ * File summary row in list responses
+ */
 export interface FileListItem {
   created_at?: string;
 
+  /**
+   * Asset category, e.g. image
+   */
   extension?: string;
 
   file_no?: string;
@@ -66,12 +85,15 @@ export interface FileListItem {
 
   name?: string;
 
+  /**
+   * Relative path / display path
+   */
   path?: string;
 
   /**
-   * Thumbnail CDN URL
+   * Thumbnail CDN URL (field name as returned by the API)
    */
-  thumbnail?: string;
+  thumbanil?: string;
 
   url?: string;
 
@@ -100,7 +122,7 @@ export namespace FileObject {
 
     file_no?: string;
 
-    folder?: string | null;
+    folder?: unknown;
 
     format?: string;
 
@@ -108,6 +130,9 @@ export namespace FileObject {
 
     path?: string | null;
 
+    /**
+     * File size in bytes
+     */
     size?: number;
 
     uploaded_at?: string;
@@ -134,38 +159,6 @@ export namespace FileObject {
   }
 }
 
-export interface FileUpdateResponse {
-  id?: string;
-
-  created_at?: string;
-
-  extension?: string;
-
-  file_no?: string;
-
-  file_size?: number;
-
-  folder_id?: string | null;
-
-  format?: string;
-
-  height?: number | null;
-
-  meta_data?: { [key: string]: unknown };
-
-  name?: string;
-
-  path?: string | null;
-
-  updated_at?: string;
-
-  url?: string;
-
-  width?: number | null;
-
-  workspace_no?: string;
-}
-
 export interface FileListResponse {
   files: Array<FileListItem>;
 
@@ -182,6 +175,9 @@ export namespace FileListResponse {
 
     page: number;
 
+    /**
+     * Total matching files
+     */
     total: number;
   }
 }
@@ -190,10 +186,15 @@ export interface FileDeleteResponse {
   message?: string;
 }
 
+/**
+ * Updated file record after rename
+ */
 export interface FileRenameResponse {
   id?: string;
 
   created_at?: string;
+
+  created_by?: string;
 
   extension?: string;
 
@@ -207,11 +208,25 @@ export interface FileRenameResponse {
 
   height?: number | null;
 
+  is_active?: boolean;
+
+  is_default?: boolean;
+
+  is_delete?: boolean;
+
   meta_data?: { [key: string]: unknown };
 
   name?: string;
 
+  orientation?: string | null;
+
+  original_url?: string | null;
+
   path?: string | null;
+
+  source?: string;
+
+  transform_string?: string | null;
 
   updated_at?: string;
 
@@ -219,29 +234,14 @@ export interface FileRenameResponse {
 
   width?: number | null;
 
+  workspace_id?: string;
+
   workspace_no?: string;
-}
-
-export interface FileUpdateParams {
-  /**
-   * Tags to add
-   */
-  add_tags?: Array<string>;
-
-  /**
-   * Metadata to merge
-   */
-  metadata?: { [key: string]: unknown };
-
-  /**
-   * Tags to remove
-   */
-  remove_tags?: Array<string>;
 }
 
 export interface FileListParams {
   /**
-   * Filter to files in this folder
+   * Restrict results to files in this folder (folder number)
    */
   folder_no?: string;
 
@@ -251,7 +251,7 @@ export interface FileListParams {
   limit?: number;
 
   /**
-   * Partial filename match (case-insensitive)
+   * Filter by filename (partial match, if supported)
    */
   name?: string;
 
@@ -261,7 +261,7 @@ export interface FileListParams {
   page?: number;
 
   /**
-   * Filter by path prefix (e.g., products/sku123/)
+   * Filter by path prefix (if supported)
    */
   path?: string;
 
@@ -276,14 +276,14 @@ export interface FileListParams {
   sort_order?: 'asc' | 'desc';
 
   /**
-   * Comma-separated tags to filter by
+   * Comma-separated tags (if supported)
    */
   tags?: string;
 }
 
 export interface FileRenameParams {
   /**
-   * New base name; extension is preserved by the server
+   * New base name; extension may be applied by the server
    */
   name: string;
 }
@@ -292,11 +292,9 @@ export declare namespace Files {
   export {
     type FileListItem as FileListItem,
     type FileObject as FileObject,
-    type FileUpdateResponse as FileUpdateResponse,
     type FileListResponse as FileListResponse,
     type FileDeleteResponse as FileDeleteResponse,
     type FileRenameResponse as FileRenameResponse,
-    type FileUpdateParams as FileUpdateParams,
     type FileListParams as FileListParams,
     type FileRenameParams as FileRenameParams,
   };

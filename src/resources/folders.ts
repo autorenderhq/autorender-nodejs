@@ -5,20 +5,30 @@ import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
-/**
- * Manage folder structure
- */
 export class Folders extends APIResource {
   /**
-   * Create a new folder. Optionally nest it under an existing folder by providing
-   * parent_folder_no.
+   * Create a folder under an optional parent.
+   *
+   * @example
+   * ```ts
+   * const folder = await client.folders.create({
+   *   name: 'demo2',
+   *   parent_folder_no: 'sD1LvqoDzG',
+   * });
+   * ```
    */
   create(body: FolderCreateParams, options?: RequestOptions): APIPromise<FolderCreateResponse> {
     return this._client.post('/api/v1/folders', { body, ...options });
   }
 
   /**
-   * List folders in the workspace. Omit parent_folder_no to list root-level folders.
+   * List folders under an optional parent. Omit `parent_folder_no` to list
+   * root-level folders.
+   *
+   * @example
+   * ```ts
+   * const folders = await client.folders.list();
+   * ```
    */
   list(
     query: FolderListParams | null | undefined = {},
@@ -28,14 +38,26 @@ export class Folders extends APIResource {
   }
 
   /**
-   * Delete a folder by its folder number.
+   * Delete a folder by folder number. No request body required.
+   *
+   * @example
+   * ```ts
+   * const folder = await client.folders.delete('my8JeLg4tr');
+   * ```
    */
   delete(folderNo: string, options?: RequestOptions): APIPromise<FolderDeleteResponse> {
     return this._client.delete(path`/api/v1/folders/${folderNo}`, options);
   }
 
   /**
-   * Rename a folder by its folder number.
+   * Rename a folder by `folder_no`.
+   *
+   * @example
+   * ```ts
+   * const folder = await client.folders.rename('53855hxPoq', {
+   *   name: 'demo2',
+   * });
+   * ```
    */
   rename(folderNo: string, body: FolderRenameParams, options?: RequestOptions): APIPromise<Folder> {
     return this._client.post(path`/api/v1/folders/rename/${folderNo}`, { body, ...options });
@@ -46,6 +68,8 @@ export interface Folder {
   id?: string;
 
   created_at?: string;
+
+  created_by?: string;
 
   folder_no?: string;
 
@@ -58,6 +82,8 @@ export interface Folder {
   parent_folder?: string | null;
 
   path?: string;
+
+  source?: string;
 
   updated_at?: string;
 
@@ -110,22 +136,19 @@ export interface FolderCreateParams {
   name: string;
 
   /**
-   * Parent folder number; omit for root level
+   * Parent folder number; omit or null for root
    */
   parent_folder_no?: string;
 }
 
 export interface FolderListParams {
   /**
-   * Return only direct children of this folder
+   * Only return direct children of this folder (folder number)
    */
   parent_folder_no?: string;
 }
 
 export interface FolderRenameParams {
-  /**
-   * New folder name
-   */
   name: string;
 }
 

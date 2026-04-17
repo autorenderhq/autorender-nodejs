@@ -9,7 +9,7 @@ const client = new Autorender({
 
 describe('resource folders', () => {
   test('create: only required params', async () => {
-    const responsePromise = client.folders.create({ name: 'name' });
+    const responsePromise = client.folders.create({ name: 'demo2' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -20,7 +20,7 @@ describe('resource folders', () => {
   });
 
   test('create: required and optional params', async () => {
-    const response = await client.folders.create({ name: 'name', parent_folder_no: 'parent_folder_no' });
+    const response = await client.folders.create({ name: 'demo2', parent_folder_no: 'sD1LvqoDzG' });
   });
 
   test('list', async () => {
@@ -53,7 +53,7 @@ describe('resource folders', () => {
   });
 
   test('rename: only required params', async () => {
-    const responsePromise = client.folders.rename('53855hxPoq', { name: 'name' });
+    const responsePromise = client.folders.rename('53855hxPoq', { name: 'demo2' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -64,6 +64,6 @@ describe('resource folders', () => {
   });
 
   test('rename: required and optional params', async () => {
-    const response = await client.folders.rename('53855hxPoq', { name: 'name' });
+    const response = await client.folders.rename('53855hxPoq', { name: 'demo2' });
   });
 });

@@ -19,17 +19,6 @@ describe('resource files', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('update', async () => {
-    const responsePromise = client.files.update('2353377462', {});
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
   test('list', async () => {
     const responsePromise = client.files.list();
     const rawResponse = await responsePromise.asResponse();
@@ -61,7 +50,7 @@ describe('resource files', () => {
   });
 
   test('delete', async () => {
-    const responsePromise = client.files.delete('2353377462');
+    const responsePromise = client.files.delete('2338056701');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -72,7 +61,7 @@ describe('resource files', () => {
   });
 
   test('rename: only required params', async () => {
-    const responsePromise = client.files.rename('2353377462', { name: 'name' });
+    const responsePromise = client.files.rename('2338045312', { name: 'demo' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -83,6 +72,6 @@ describe('resource files', () => {
   });
 
   test('rename: required and optional params', async () => {
-    const response = await client.files.rename('2353377462', { name: 'name' });
+    const response = await client.files.rename('2338045312', { name: 'demo' });
   });
 });
