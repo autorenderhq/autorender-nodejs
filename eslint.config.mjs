@@ -25,7 +25,7 @@ export default tseslint.config(
         {
           patterns: [
             {
-              regex: '^@autorender/sdk(/.*)?',
+              regex: '^@autorender/nodejs(/.*)?',
               message: 'Use a relative import, not a package import.',
             },
           ],

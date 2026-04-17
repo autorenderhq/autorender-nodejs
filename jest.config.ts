@@ -7,8 +7,8 @@ const config: JestConfigWithTsJest = {
     '^.+\\.(t|j)sx?$': ['@swc/jest', { sourceMaps: 'inline' }],
   },
   moduleNameMapper: {
-    '^@autorender/sdk$': '<rootDir>/src/index.ts',
-    '^@autorender/sdk/(.*)$': '<rootDir>/src/$1',
+    '^@autorender/nodejs$': '<rootDir>/src/index.ts',
+    '^@autorender/nodejs/(.*)$': '<rootDir>/src/$1',
   },
   modulePathIgnorePatterns: [
     '<rootDir>/ecosystem-tests/',
