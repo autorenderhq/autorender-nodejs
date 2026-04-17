@@ -31,4 +31,4 @@ export {
   type UploadCreateParams,
   type UploadCreateFromURLParams,
   type UploadGenerateTokenParams,
-} from './uploads/uploads';
+} from './uploads';

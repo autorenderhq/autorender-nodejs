@@ -50,7 +50,7 @@ import {
   UploadGenerateTokenParams,
   UploadGenerateTokenResponse,
   Uploads as UploadsAPIUploads,
-} from './resources/uploads/uploads';
+} from './resources/uploads';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
