@@ -2,14 +2,11 @@
 
 import Autorender from '@autorender/nodejs';
 
-const client = new Autorender({
-  apiKey: 'My API Key',
-  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
-});
+const client = new Autorender({ baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010' });
 
 describe('resource files', () => {
   test('retrieve', async () => {
-    const responsePromise = client.files.retrieve('2353377462');
+    const responsePromise = client.files.retrieve('fileNo');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -35,13 +32,12 @@ describe('resource files', () => {
     await expect(
       client.files.list(
         {
-          folder_no: 'folder_no',
-          limit: 0,
+          folderNo: 'folderNo',
+          limit: 1,
           name: 'name',
-          page: 0,
+          page: 1,
           path: 'path',
-          sort_field: 'file_size',
-          sort_order: 'asc',
+          sort: 'created_at_asc',
           tags: 'tags',
         },
         { path: '/_stainless_unknown_path' },
@@ -50,7 +46,7 @@ describe('resource files', () => {
   });
 
   test('delete', async () => {
-    const responsePromise = client.files.delete('2338056701');
+    const responsePromise = client.files.delete('fileNo');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -61,7 +57,7 @@ describe('resource files', () => {
   });
 
   test('rename: only required params', async () => {
-    const responsePromise = client.files.rename('2338045312', { name: 'demo' });
+    const responsePromise = client.files.rename('fileNo', { name: 'name' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -72,6 +68,6 @@ describe('resource files', () => {
   });
 
   test('rename: required and optional params', async () => {
-    const response = await client.files.rename('2338045312', { name: 'demo' });
+    const response = await client.files.rename('fileNo', { name: 'name' });
   });
 });

@@ -20,31 +20,25 @@ import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import {
-  FileDeleteResponse,
-  FileListItem,
   FileListParams,
   FileListResponse,
-  FileObject,
   FileRenameParams,
   FileRenameResponse,
+  FileRetrieveResponse,
   Files,
 } from './resources/files';
 import {
-  Folder,
   FolderCreateParams,
   FolderCreateResponse,
-  FolderDeleteResponse,
-  FolderListItem,
-  FolderListParams,
-  FolderListResponse,
   FolderRenameParams,
+  FolderRenameResponse,
   Folders,
 } from './resources/folders';
 import {
-  Upload,
   UploadCreateFromURLParams,
+  UploadCreateFromURLResponse,
   UploadCreateParams,
-  UploadData,
+  UploadCreateResponse,
   Uploads as UploadsAPIUploads,
 } from './resources/uploads';
 import { type Fetch } from './internal/builtin-types';
@@ -227,23 +221,7 @@ export class Autorender {
   }
 
   protected validateHeaders({ values, nulls }: NullableHeaders) {
-    if (this.apiKey && values.get('authorization')) {
-      return;
-    }
-    if (nulls.has('authorization')) {
-      return;
-    }
-
-    throw new Error(
-      'Could not resolve authentication method. Expected the apiKey to be set. Or for the "Authorization" headers to be explicitly omitted',
-    );
-  }
-
-  protected async authHeaders(opts: FinalRequestOptions): Promise<NullableHeaders | undefined> {
-    if (this.apiKey == null) {
-      return undefined;
-    }
-    return buildHeaders([{ Authorization: `Bearer ${this.apiKey}` }]);
+    return;
   }
 
   /**
@@ -696,7 +674,6 @@ export class Autorender {
         ...(options.timeout ? { 'X-Stainless-Timeout': String(Math.trunc(options.timeout / 1000)) } : {}),
         ...getPlatformHeaders(),
       },
-      await this.authHeaders(options),
       this._options.defaultHeaders,
       bodyHeaders,
       options.headers,
@@ -777,8 +754,17 @@ export class Autorender {
 
   static toFile = Uploads.toFile;
 
+  /**
+   * Upload endpoints (API key required)
+   */
   uploads: API.Uploads = new API.Uploads(this);
+  /**
+   * File management endpoints (API key required)
+   */
   files: API.Files = new API.Files(this);
+  /**
+   * Folder management endpoints (API key required)
+   */
   folders: API.Folders = new API.Folders(this);
 }
 
@@ -797,18 +783,16 @@ export declare namespace Autorender {
 
   export {
     UploadsAPIUploads as Uploads,
-    type Upload as Upload,
-    type UploadData as UploadData,
+    type UploadCreateResponse as UploadCreateResponse,
+    type UploadCreateFromURLResponse as UploadCreateFromURLResponse,
     type UploadCreateParams as UploadCreateParams,
     type UploadCreateFromURLParams as UploadCreateFromURLParams,
   };
 
   export {
     Files as Files,
-    type FileListItem as FileListItem,
-    type FileObject as FileObject,
+    type FileRetrieveResponse as FileRetrieveResponse,
     type FileListResponse as FileListResponse,
-    type FileDeleteResponse as FileDeleteResponse,
     type FileRenameResponse as FileRenameResponse,
     type FileListParams as FileListParams,
     type FileRenameParams as FileRenameParams,
@@ -816,13 +800,9 @@ export declare namespace Autorender {
 
   export {
     Folders as Folders,
-    type Folder as Folder,
-    type FolderListItem as FolderListItem,
     type FolderCreateResponse as FolderCreateResponse,
-    type FolderListResponse as FolderListResponse,
-    type FolderDeleteResponse as FolderDeleteResponse,
+    type FolderRenameResponse as FolderRenameResponse,
     type FolderCreateParams as FolderCreateParams,
-    type FolderListParams as FolderListParams,
     type FolderRenameParams as FolderRenameParams,
   };
 }

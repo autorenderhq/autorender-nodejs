@@ -2,32 +2,23 @@
 
 import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
+import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
+/**
+ * File management endpoints (API key required)
+ */
 export class Files extends APIResource {
   /**
-   * Retrieve detailed information about a file by numeric file id (`file_no`).
-   *
-   * @example
-   * ```ts
-   * const fileObject = await client.files.retrieve(
-   *   '2353377462',
-   * );
-   * ```
+   * Get file details
    */
-  retrieve(fileNo: string, options?: RequestOptions): APIPromise<FileObject> {
+  retrieve(fileNo: string, options?: RequestOptions): APIPromise<FileRetrieveResponse> {
     return this._client.get(path`/api/v1/files/${fileNo}`, options);
   }
 
   /**
-   * Paginated list of files in the workspace. Filter by folder, sort by field and
-   * order, and page through results.
-   *
-   * @example
-   * ```ts
-   * const files = await client.files.list();
-   * ```
+   * List/search files with pagination, filtering, and sorting.
    */
   list(
     query: FileListParams | null | undefined = {},
@@ -37,27 +28,17 @@ export class Files extends APIResource {
   }
 
   /**
-   * Permanently delete a file. No request body is required.
-   *
-   * @example
-   * ```ts
-   * const file = await client.files.delete('2338056701');
-   * ```
+   * Delete file
    */
-  delete(fileNo: string, options?: RequestOptions): APIPromise<FileDeleteResponse> {
-    return this._client.delete(path`/api/v1/files/${fileNo}`, options);
+  delete(fileNo: string, options?: RequestOptions): APIPromise<void> {
+    return this._client.delete(path`/api/v1/files/${fileNo}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 
   /**
-   * Rename a file. The API may preserve or normalize the file extension (e.g. `demo`
-   * → `demo.png`).
-   *
-   * @example
-   * ```ts
-   * const response = await client.files.rename('2338045312', {
-   *   name: 'demo',
-   * });
-   * ```
+   * Rename file
    */
   rename(fileNo: string, body: FileRenameParams, options?: RequestOptions): APIPromise<FileRenameResponse> {
     return this._client.patch(path`/api/v1/files/${fileNo}/rename`, { body, ...options });
@@ -65,235 +46,193 @@ export class Files extends APIResource {
 }
 
 /**
- * File summary row in list responses
+ * File details
  */
-export interface FileListItem {
-  created_at?: string;
+export interface FileRetrieveResponse {
+  data: FileRetrieveResponse.Data;
 
-  /**
-   * Asset category, e.g. image
-   */
-  extension?: string;
-
-  file_no?: string;
-
-  file_size?: number;
-
-  format?: string;
-
-  height?: number | null;
-
-  name?: string;
-
-  /**
-   * Relative path / display path
-   */
-  path?: string;
-
-  /**
-   * Thumbnail CDN URL (field name as returned by the API)
-   */
-  thumbanil?: string;
-
-  url?: string;
-
-  width?: number | null;
-
-  workspace_no?: string;
+  success: true;
 }
 
-export interface FileObject {
-  data?: FileObject.Data;
-
-  success?: boolean;
-}
-
-export namespace FileObject {
+export namespace FileRetrieveResponse {
   export interface Data {
-    id?: string;
+    id: string;
 
-    asset_key?: string;
+    created_at: string;
 
-    asset_url?: string;
+    file_no: string;
 
-    dimensions?: Data.Dimensions;
+    folder_name: string | null;
 
-    extension?: string;
+    folder_no: string | null;
 
-    file_no?: string;
+    format: string | null;
 
-    folder?: unknown;
+    height: number | null;
 
-    format?: string;
+    metadata: { [key: string]: unknown } | null;
 
-    name?: string;
+    mime_type: string;
 
-    path?: string | null;
+    name: string;
 
-    /**
-     * File size in bytes
-     */
-    size?: number;
+    path: string;
 
-    uploaded_at?: string;
+    size: number;
 
-    uploaded_by?: string;
+    source: string;
 
-    url?: string;
+    tags: Array<string>;
 
-    workspace?: Data.Workspace;
+    updated_at: string | null;
+
+    url: string;
+
+    width: number | null;
   }
-
-  export namespace Data {
-    export interface Dimensions {
-      height?: number;
-
-      width?: number;
-    }
-
-    export interface Workspace {
-      name?: string;
-
-      workspace_no?: string;
-    }
-  }
-}
-
-export interface FileListResponse {
-  files: Array<FileListItem>;
-
-  meta: FileListResponse.Meta;
-}
-
-export namespace FileListResponse {
-  export interface Meta {
-    hasNext: boolean;
-
-    hasPrev: boolean;
-
-    limit: number;
-
-    page: number;
-
-    /**
-     * Total matching files
-     */
-    total: number;
-  }
-}
-
-export interface FileDeleteResponse {
-  message?: string;
 }
 
 /**
- * Updated file record after rename
+ * Files list
+ */
+export interface FileListResponse {
+  is_page_next: boolean;
+
+  items: Array<FileListResponse.Item>;
+
+  limit: number;
+
+  page: number;
+
+  total_count: number;
+
+  total_pages: number;
+}
+
+export namespace FileListResponse {
+  export interface Item {
+    id: string;
+
+    created_at: string;
+
+    file_no: string;
+
+    folder_name: string | null;
+
+    folder_no: string | null;
+
+    format: string | null;
+
+    height: number | null;
+
+    metadata: { [key: string]: unknown } | null;
+
+    mime_type: string;
+
+    name: string;
+
+    path: string;
+
+    size: number;
+
+    source: string;
+
+    tags: Array<string>;
+
+    updated_at: string | null;
+
+    url: string;
+
+    width: number | null;
+  }
+}
+
+/**
+ * Renamed file
  */
 export interface FileRenameResponse {
-  id?: string;
+  data: FileRenameResponse.Data;
 
-  created_at?: string;
+  success: true;
+}
 
-  created_by?: string;
+export namespace FileRenameResponse {
+  export interface Data {
+    id: string;
 
-  extension?: string;
+    created_at: string;
 
-  file_no?: string;
+    file_no: string;
 
-  file_size?: number;
+    folder_name: string | null;
 
-  folder_id?: string | null;
+    folder_no: string | null;
 
-  format?: string;
+    format: string | null;
 
-  height?: number | null;
+    height: number | null;
 
-  is_active?: boolean;
+    metadata: { [key: string]: unknown } | null;
 
-  is_default?: boolean;
+    mime_type: string;
 
-  is_delete?: boolean;
+    name: string;
 
-  meta_data?: { [key: string]: unknown };
+    path: string;
 
-  name?: string;
+    size: number;
 
-  orientation?: string | null;
+    source: string;
 
-  original_url?: string | null;
+    tags: Array<string>;
 
-  path?: string | null;
+    updated_at: string | null;
 
-  source?: string;
+    url: string;
 
-  transform_string?: string | null;
-
-  updated_at?: string;
-
-  url?: string;
-
-  width?: number | null;
-
-  workspace_id?: string;
-
-  workspace_no?: string;
+    width: number | null;
+  }
 }
 
 export interface FileListParams {
   /**
-   * Restrict results to files in this folder (folder number)
+   * Exact folder number
    */
-  folder_no?: string;
+  folderNo?: string;
 
-  /**
-   * Items per page
-   */
   limit?: number;
 
   /**
-   * Filter by filename (partial match, if supported)
+   * Partial name match (case-insensitive)
    */
   name?: string;
 
-  /**
-   * Page number (1-based)
-   */
   page?: number;
 
   /**
-   * Filter by path prefix (if supported)
+   * Folder prefix (e.g. products/sku123/)
    */
   path?: string;
 
-  /**
-   * Field to sort by
-   */
-  sort_field?: 'file_size' | 'name' | 'created_at' | 'updated_at';
+  sort?: 'created_at_asc' | 'created_at_desc' | 'size_asc' | 'size_desc';
 
   /**
-   * Sort direction
-   */
-  sort_order?: 'asc' | 'desc';
-
-  /**
-   * Comma-separated tags (if supported)
+   * Comma-separated tags
    */
   tags?: string;
 }
 
 export interface FileRenameParams {
   /**
-   * New base name; extension may be applied by the server
+   * New file name without extension or path separators
    */
   name: string;
 }
 
 export declare namespace Files {
   export {
-    type FileListItem as FileListItem,
-    type FileObject as FileObject,
+    type FileRetrieveResponse as FileRetrieveResponse,
     type FileListResponse as FileListResponse,
-    type FileDeleteResponse as FileDeleteResponse,
     type FileRenameResponse as FileRenameResponse,
     type FileListParams as FileListParams,
     type FileRenameParams as FileRenameParams,

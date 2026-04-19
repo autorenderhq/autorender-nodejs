@@ -22,16 +22,14 @@ The full API of this library can be found in [api.md](api.md).
 ```js
 import Autorender from '@autorender/nodejs';
 
-const client = new Autorender({
-  apiKey: process.env['AUTORENDER_API_KEY'], // This is the default and can be omitted
-});
+const client = new Autorender();
 
 const upload = await client.uploads.create({
   file: fs.createReadStream('path/to/file'),
-  file_name: 'file_name',
+  file_name: 'product.jpg',
 });
 
-console.log(upload.data);
+console.log(upload.id);
 ```
 
 ### Request & Response types
@@ -42,15 +40,13 @@ This library includes TypeScript definitions for all request params and response
 ```ts
 import Autorender from '@autorender/nodejs';
 
-const client = new Autorender({
-  apiKey: process.env['AUTORENDER_API_KEY'], // This is the default and can be omitted
-});
+const client = new Autorender();
 
 const params: Autorender.UploadCreateParams = {
   file: fs.createReadStream('path/to/file'),
-  file_name: 'file_name',
+  file_name: 'product.jpg',
 };
-const upload: Autorender.Upload = await client.uploads.create(params);
+const upload: Autorender.UploadCreateResponse = await client.uploads.create(params);
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -71,22 +67,28 @@ import Autorender, { toFile } from '@autorender/nodejs';
 const client = new Autorender();
 
 // If you have access to Node `fs` we recommend using `fs.createReadStream()`:
-await client.uploads.create({ file: fs.createReadStream('/path/to/file'), file_name: 'file_name' });
+await client.uploads.create({
+  file: fs.createReadStream('/path/to/file'),
+  file_name: 'product.jpg',
+});
 
 // Or if you have the web `File` API you can pass a `File` instance:
-await client.uploads.create({ file: new File(['my bytes'], 'file'), file_name: 'file_name' });
+await client.uploads.create({ file: new File(['my bytes'], 'file'), file_name: 'product.jpg' });
 
 // You can also pass a `fetch` `Response`:
-await client.uploads.create({ file: await fetch('https://somesite/file'), file_name: 'file_name' });
+await client.uploads.create({
+  file: await fetch('https://somesite/file'),
+  file_name: 'product.jpg',
+});
 
 // Finally, if none of the above are convenient, you can use our `toFile` helper:
 await client.uploads.create({
   file: await toFile(Buffer.from('my bytes'), 'file'),
-  file_name: 'file_name',
+  file_name: 'product.jpg',
 });
 await client.uploads.create({
   file: await toFile(new Uint8Array([0, 1, 2]), 'file'),
-  file_name: 'file_name',
+  file_name: 'product.jpg',
 });
 ```
 
@@ -99,7 +101,7 @@ a subclass of `APIError` will be thrown:
 <!-- prettier-ignore -->
 ```ts
 const upload = await client.uploads
-  .create({ file: fs.createReadStream('path/to/file'), file_name: 'file_name' })
+  .create({ file: fs.createReadStream('path/to/file'), file_name: 'product.jpg' })
   .catch(async (err) => {
     if (err instanceof Autorender.APIError) {
       console.log(err.status); // 400
@@ -140,7 +142,7 @@ const client = new Autorender({
 });
 
 // Or, configure per-request:
-await client.uploads.create({ file: fs.createReadStream('path/to/file'), file_name: 'file_name' }, {
+await client.uploads.create({ file: fs.createReadStream('path/to/file'), file_name: 'product.jpg' }, {
   maxRetries: 5,
 });
 ```
@@ -157,7 +159,7 @@ const client = new Autorender({
 });
 
 // Override per-request:
-await client.uploads.create({ file: fs.createReadStream('path/to/file'), file_name: 'file_name' }, {
+await client.uploads.create({ file: fs.createReadStream('path/to/file'), file_name: 'product.jpg' }, {
   timeout: 5 * 1000,
 });
 ```
@@ -181,16 +183,16 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 const client = new Autorender();
 
 const response = await client.uploads
-  .create({ file: fs.createReadStream('path/to/file'), file_name: 'file_name' })
+  .create({ file: fs.createReadStream('path/to/file'), file_name: 'product.jpg' })
   .asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
 const { data: upload, response: raw } = await client.uploads
-  .create({ file: fs.createReadStream('path/to/file'), file_name: 'file_name' })
+  .create({ file: fs.createReadStream('path/to/file'), file_name: 'product.jpg' })
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));
-console.log(upload.data);
+console.log(upload.id);
 ```
 
 ### Logging

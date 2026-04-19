@@ -6,12 +6,22 @@ import { type Uploadable } from '../core/uploads';
 import { RequestOptions } from '../internal/request-options';
 import { multipartFormRequestOptions } from '../internal/uploads';
 
+/**
+ * Upload endpoints (API key required)
+ */
 export class Uploads extends APIResource {
   /**
-   * Upload a file to your AutoRender workspace with optional transformations, tags,
-   * and folder organization
+   * Upload a file from your backend server using multipart/form-data.
+   *
+   * @example
+   * ```ts
+   * const upload = await client.uploads.create({
+   *   file: fs.createReadStream('path/to/file'),
+   *   file_name: 'product.jpg',
+   * });
+   * ```
    */
-  create(body: UploadCreateParams, options?: RequestOptions): APIPromise<Upload> {
+  create(body: UploadCreateParams, options?: RequestOptions): APIPromise<UploadCreateResponse> {
     return this._client.post(
       '/api/v1/uploads',
       multipartFormRequestOptions({ body, ...options }, this._client),
@@ -19,162 +29,200 @@ export class Uploads extends APIResource {
   }
 
   /**
-   * Fetch a file from a remote URL and store it in your AutoRender workspace.
+   * Download a file from a remote URL and store it in AutoRender.
+   *
+   * @example
+   * ```ts
+   * const response = await client.uploads.createFromURL({
+   *   remote_url: 'https://example.com',
+   * });
+   * ```
    */
-  createFromURL(body: UploadCreateFromURLParams, options?: RequestOptions): APIPromise<Upload> {
+  createFromURL(
+    body: UploadCreateFromURLParams,
+    options?: RequestOptions,
+  ): APIPromise<UploadCreateFromURLResponse> {
     return this._client.post('/api/v1/uploads/remote', { body, ...options });
   }
 }
 
-export interface Upload {
-  data: UploadData;
+/**
+ * Upload created
+ */
+export interface UploadCreateResponse {
+  id: string;
 
-  /**
-   * Indicates if the upload was successful
-   */
-  success: boolean;
-}
+  created_at: string;
 
-export interface UploadData {
-  /**
-   * Unique file record ID
-   */
-  id?: string;
+  custom_id: string | null;
 
-  /**
-   * 10-character file number identifier
-   */
-  file_no?: string;
+  file_no: string;
 
-  /**
-   * File size in bytes (after processing)
-   */
-  file_size?: number;
+  folder_no: string | null;
 
-  /**
-   * File format/extension (e.g., jpg, png, webp)
-   */
+  height: number | null;
+
+  is_duplicate: boolean;
+
+  is_private: boolean;
+
+  metadata: { [key: string]: unknown } | null;
+
+  mime_type: string;
+
+  name: string;
+
+  path: string;
+
+  size: number;
+
+  tags: Array<string>;
+
+  upload_source: string;
+
+  url: string;
+
+  width: number | null;
+
+  workspace_id: string;
+
   format?: string;
 
-  /**
-   * Image height in pixels (null for non-image files)
-   */
-  height?: number | null;
+  hash?: string;
+}
 
-  /**
-   * Final filename (may include random suffix if requested)
-   */
-  name?: string;
+/**
+ * Upload created
+ */
+export interface UploadCreateFromURLResponse {
+  id: string;
 
-  /**
-   * Folder path where the file is stored
-   */
-  path?: string;
+  created_at: string;
 
-  /**
-   * Full CDN URL to access the uploaded file
-   */
-  url?: string;
+  custom_id: string | null;
 
-  /**
-   * Image width in pixels (null for non-image files)
-   */
-  width?: number | null;
+  file_no: string;
 
-  /**
-   * Workspace identifier
-   */
-  workspace_no?: string;
+  folder_no: string | null;
+
+  height: number | null;
+
+  is_duplicate: boolean;
+
+  is_private: boolean;
+
+  metadata: { [key: string]: unknown } | null;
+
+  mime_type: string;
+
+  name: string;
+
+  path: string;
+
+  size: number;
+
+  tags: Array<string>;
+
+  upload_source: string;
+
+  url: string;
+
+  width: number | null;
+
+  workspace_id: string;
+
+  format?: string;
+
+  hash?: string;
 }
 
 export interface UploadCreateParams {
   /**
-   * The file to upload (binary data)
+   * File to upload.
    */
   file: Uploadable;
 
   /**
-   * File name for the uploaded file (e.g., my-image.jpg)
+   * File name (e.g. product.jpg)
    */
   file_name: string;
 
   /**
-   * Custom identifier for the file
+   * Custom identifier
    */
   custom_id?: string;
 
   /**
-   * Folder path where the file will be stored (e.g., uploads/my-folder)
+   * Optional folder path
    */
   folder?: string;
 
   /**
-   * JSON string for custom metadata (e.g., {"key": "value"})
+   * JSON string of metadata
    */
   metadata?: string;
 
   /**
-   * Set to "true" to add a random suffix to filename
+   * true/false to append random suffix
    */
   random_prefix?: string;
 
   /**
-   * Comma-separated tags (e.g., tag1,tag2,tag3)
+   * Comma-separated tags
    */
   tags?: string;
 
   /**
-   * Image transformation string (e.g., w_800,h_600,q_90)
+   * Transform string (w_300,h_300,c_crop,...)
    */
   transform?: string;
+
+  /**
+   * URL to notify on success
+   */
+  webhook_url?: string;
 }
 
 export interface UploadCreateFromURLParams {
   /**
-   * The HTTP or HTTPS URL of the image to download
+   * HTTP/HTTPS URL to fetch
    */
   remote_url: string;
 
-  /**
-   * Custom identifier for tracking the upload
-   */
   custom_id?: string;
 
   /**
-   * Folder path where the file should be stored
+   * Override file name
+   */
+  file_name?: string;
+
+  /**
+   * Destination folder path
    */
   folder?: string;
 
   /**
-   * JSON string containing custom metadata object
+   * JSON string of metadata object
    */
   metadata?: string;
 
   /**
-   * Set to 'true' to generate a random suffix for the filename
+   * true/false to append random suffix
    */
   random_prefix?: string;
 
   /**
-   * Comma-separated list of tags to apply to the file
+   * Comma-separated tags
    */
   tags?: string;
 
-  /**
-   * Transformation string to apply during upload (e.g., w_800,h_600,c_crop)
-   */
-  transform?: string;
-
-  /**
-   * URL to receive webhook notification when upload completes
-   */
   webhook_url?: string;
 }
 
 export declare namespace Uploads {
   export {
-    type Upload as Upload,
-    type UploadData as UploadData,
+    type UploadCreateResponse as UploadCreateResponse,
+    type UploadCreateFromURLResponse as UploadCreateFromURLResponse,
     type UploadCreateParams as UploadCreateParams,
     type UploadCreateFromURLParams as UploadCreateFromURLParams,
   };
