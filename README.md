@@ -48,7 +48,7 @@ const client = new Autorender({
 
 const params: Autorender.UploadCreateParams = {
   file: fs.createReadStream('path/to/file'),
-  file_name: 'product.jpg',
+  file_name: 'photo.jpg',
 };
 const upload: Autorender.UploadCreateResponse = await client.uploads.create(params);
 ```
@@ -105,7 +105,7 @@ a subclass of `APIError` will be thrown:
 <!-- prettier-ignore -->
 ```ts
 const upload = await client.uploads
-  .create({ file: fs.createReadStream('path/to/file'), file_name: 'product.jpg' })
+  .create({ file: fs.createReadStream('path/to/file'), file_name: 'photo.jpg' })
   .catch(async (err) => {
     if (err instanceof Autorender.APIError) {
       console.log(err.status); // 400
@@ -146,7 +146,7 @@ const client = new Autorender({
 });
 
 // Or, configure per-request:
-await client.uploads.create({ file: fs.createReadStream('path/to/file'), file_name: 'product.jpg' }, {
+await client.uploads.create({ file: fs.createReadStream('path/to/file'), file_name: 'photo.jpg' }, {
   maxRetries: 5,
 });
 ```
@@ -163,7 +163,7 @@ const client = new Autorender({
 });
 
 // Override per-request:
-await client.uploads.create({ file: fs.createReadStream('path/to/file'), file_name: 'product.jpg' }, {
+await client.uploads.create({ file: fs.createReadStream('path/to/file'), file_name: 'photo.jpg' }, {
   timeout: 5 * 1000,
 });
 ```
@@ -187,13 +187,13 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 const client = new Autorender();
 
 const response = await client.uploads
-  .create({ file: fs.createReadStream('path/to/file'), file_name: 'product.jpg' })
+  .create({ file: fs.createReadStream('path/to/file'), file_name: 'photo.jpg' })
   .asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
 const { data: upload, response: raw } = await client.uploads
-  .create({ file: fs.createReadStream('path/to/file'), file_name: 'product.jpg' })
+  .create({ file: fs.createReadStream('path/to/file'), file_name: 'photo.jpg' })
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));
 console.log(upload.id);
