@@ -25,6 +25,8 @@ import {
   FileRenameParams,
   FileRenameResponse,
   FileRetrieveResponse,
+  FileUpdateParams,
+  FileUpdateResponse,
   Files,
 } from './resources/files';
 import {
@@ -39,6 +41,9 @@ import {
   UploadCreateFromURLResponse,
   UploadCreateParams,
   UploadCreateResponse,
+  UploadGenerateTokenParams,
+  UploadGenerateTokenResponse,
+  UploadUploadWithTokenResponse,
   Uploads as UploadsAPIUploads,
 } from './resources/uploads';
 import { type Fetch } from './internal/builtin-types';
@@ -221,7 +226,23 @@ export class Autorender {
   }
 
   protected validateHeaders({ values, nulls }: NullableHeaders) {
-    return;
+    if (this.apiKey && values.get('x-api-key')) {
+      return;
+    }
+    if (nulls.has('x-api-key')) {
+      return;
+    }
+
+    throw new Error(
+      'Could not resolve authentication method. Expected the apiKey to be set. Or for the "x-api-key" headers to be explicitly omitted',
+    );
+  }
+
+  protected async authHeaders(opts: FinalRequestOptions): Promise<NullableHeaders | undefined> {
+    if (this.apiKey == null) {
+      return undefined;
+    }
+    return buildHeaders([{ 'x-api-key': this.apiKey }]);
   }
 
   /**
@@ -674,6 +695,7 @@ export class Autorender {
         ...(options.timeout ? { 'X-Stainless-Timeout': String(Math.trunc(options.timeout / 1000)) } : {}),
         ...getPlatformHeaders(),
       },
+      await this.authHeaders(options),
       this._options.defaultHeaders,
       bodyHeaders,
       options.headers,
@@ -785,15 +807,20 @@ export declare namespace Autorender {
     UploadsAPIUploads as Uploads,
     type UploadCreateResponse as UploadCreateResponse,
     type UploadCreateFromURLResponse as UploadCreateFromURLResponse,
+    type UploadGenerateTokenResponse as UploadGenerateTokenResponse,
+    type UploadUploadWithTokenResponse as UploadUploadWithTokenResponse,
     type UploadCreateParams as UploadCreateParams,
     type UploadCreateFromURLParams as UploadCreateFromURLParams,
+    type UploadGenerateTokenParams as UploadGenerateTokenParams,
   };
 
   export {
     Files as Files,
     type FileRetrieveResponse as FileRetrieveResponse,
+    type FileUpdateResponse as FileUpdateResponse,
     type FileListResponse as FileListResponse,
     type FileRenameResponse as FileRenameResponse,
+    type FileUpdateParams as FileUpdateParams,
     type FileListParams as FileListParams,
     type FileRenameParams as FileRenameParams,
   };

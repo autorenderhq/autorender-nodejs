@@ -22,11 +22,13 @@ The full API of this library can be found in [api.md](api.md).
 ```js
 import Autorender from '@autorender/nodejs';
 
-const client = new Autorender();
+const client = new Autorender({
+  apiKey: process.env['AUTORENDER_API_KEY'], // This is the default and can be omitted
+});
 
 const upload = await client.uploads.create({
   file: fs.createReadStream('path/to/file'),
-  file_name: 'product.jpg',
+  file_name: 'photo.jpg',
 });
 
 console.log(upload.id);
@@ -40,7 +42,9 @@ This library includes TypeScript definitions for all request params and response
 ```ts
 import Autorender from '@autorender/nodejs';
 
-const client = new Autorender();
+const client = new Autorender({
+  apiKey: process.env['AUTORENDER_API_KEY'], // This is the default and can be omitted
+});
 
 const params: Autorender.UploadCreateParams = {
   file: fs.createReadStream('path/to/file'),
