@@ -3,8 +3,10 @@
 export {
   Files,
   type FileRetrieveResponse,
+  type FileUpdateResponse,
   type FileListResponse,
   type FileRenameResponse,
+  type FileUpdateParams,
   type FileListParams,
   type FileRenameParams,
 } from './files';
@@ -19,6 +21,9 @@ export {
   Uploads,
   type UploadCreateResponse,
   type UploadCreateFromURLResponse,
+  type UploadGenerateTokenResponse,
+  type UploadUploadWithTokenResponse,
   type UploadCreateParams,
   type UploadCreateFromURLParams,
+  type UploadGenerateTokenParams,
 } from './uploads';

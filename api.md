@@ -4,23 +4,29 @@ Types:
 
 - <code><a href="./src/resources/uploads.ts">UploadCreateResponse</a></code>
 - <code><a href="./src/resources/uploads.ts">UploadCreateFromURLResponse</a></code>
+- <code><a href="./src/resources/uploads.ts">UploadGenerateTokenResponse</a></code>
+- <code><a href="./src/resources/uploads.ts">UploadUploadWithTokenResponse</a></code>
 
 Methods:
 
 - <code title="post /api/v1/uploads">client.uploads.<a href="./src/resources/uploads.ts">create</a>({ ...params }) -> UploadCreateResponse</code>
 - <code title="post /api/v1/uploads/remote">client.uploads.<a href="./src/resources/uploads.ts">createFromURL</a>({ ...params }) -> UploadCreateFromURLResponse</code>
+- <code title="post /api/v1/generate-token">client.uploads.<a href="./src/resources/uploads.ts">generateToken</a>({ ...params }) -> UploadGenerateTokenResponse</code>
+- <code title="post /api/v1/uploads/{token}">client.uploads.<a href="./src/resources/uploads.ts">uploadWithToken</a>(token, body) -> UploadUploadWithTokenResponse</code>
 
 # Files
 
 Types:
 
 - <code><a href="./src/resources/files.ts">FileRetrieveResponse</a></code>
+- <code><a href="./src/resources/files.ts">FileUpdateResponse</a></code>
 - <code><a href="./src/resources/files.ts">FileListResponse</a></code>
 - <code><a href="./src/resources/files.ts">FileRenameResponse</a></code>
 
 Methods:
 
 - <code title="get /api/v1/files/{fileNo}">client.files.<a href="./src/resources/files.ts">retrieve</a>(fileNo) -> FileRetrieveResponse</code>
+- <code title="patch /api/v1/files/{fileNo}">client.files.<a href="./src/resources/files.ts">update</a>(fileNo, { ...params }) -> FileUpdateResponse</code>
 - <code title="get /api/v1/files">client.files.<a href="./src/resources/files.ts">list</a>({ ...params }) -> FileListResponse</code>
 - <code title="delete /api/v1/files/{fileNo}">client.files.<a href="./src/resources/files.ts">delete</a>(fileNo) -> void</code>
 - <code title="patch /api/v1/files/{fileNo}/rename">client.files.<a href="./src/resources/files.ts">rename</a>(fileNo, { ...params }) -> FileRenameResponse</code>

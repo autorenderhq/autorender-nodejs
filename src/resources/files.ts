@@ -18,6 +18,13 @@ export class Files extends APIResource {
   }
 
   /**
+   * Update file tags/metadata
+   */
+  update(fileNo: string, body: FileUpdateParams, options?: RequestOptions): APIPromise<FileUpdateResponse> {
+    return this._client.patch(path`/api/v1/files/${fileNo}`, { body, ...options });
+  }
+
+  /**
    * List/search files with pagination, filtering, and sorting.
    */
   list(
@@ -55,6 +62,53 @@ export interface FileRetrieveResponse {
 }
 
 export namespace FileRetrieveResponse {
+  export interface Data {
+    id: string;
+
+    created_at: string;
+
+    file_no: string;
+
+    folder_name: string | null;
+
+    folder_no: string | null;
+
+    format: string | null;
+
+    height: number | null;
+
+    metadata: { [key: string]: unknown } | null;
+
+    mime_type: string;
+
+    name: string;
+
+    path: string;
+
+    size: number;
+
+    source: string;
+
+    tags: Array<string>;
+
+    updated_at: string | null;
+
+    url: string;
+
+    width: number | null;
+  }
+}
+
+/**
+ * Updated file
+ */
+export interface FileUpdateResponse {
+  data: FileUpdateResponse.Data;
+
+  success: true;
+}
+
+export namespace FileUpdateResponse {
   export interface Data {
     id: string;
 
@@ -194,6 +248,23 @@ export namespace FileRenameResponse {
   }
 }
 
+export interface FileUpdateParams {
+  /**
+   * Tags to add to the existing set
+   */
+  add_tags?: Array<string>;
+
+  /**
+   * Metadata to merge into existing metadata
+   */
+  metadata?: { [key: string]: unknown };
+
+  /**
+   * Tags to remove from the existing set
+   */
+  remove_tags?: Array<string>;
+}
+
 export interface FileListParams {
   /**
    * Exact folder number
@@ -232,8 +303,10 @@ export interface FileRenameParams {
 export declare namespace Files {
   export {
     type FileRetrieveResponse as FileRetrieveResponse,
+    type FileUpdateResponse as FileUpdateResponse,
     type FileListResponse as FileListResponse,
     type FileRenameResponse as FileRenameResponse,
+    type FileUpdateParams as FileUpdateParams,
     type FileListParams as FileListParams,
     type FileRenameParams as FileRenameParams,
   };
