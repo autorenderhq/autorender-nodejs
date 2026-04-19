@@ -12,7 +12,7 @@ Methods:
 - <code title="post /api/v1/uploads">client.uploads.<a href="./src/resources/uploads.ts">create</a>({ ...params }) -> UploadCreateResponse</code>
 - <code title="post /api/v1/uploads/remote">client.uploads.<a href="./src/resources/uploads.ts">createFromURL</a>({ ...params }) -> UploadCreateFromURLResponse</code>
 - <code title="post /api/v1/generate-token">client.uploads.<a href="./src/resources/uploads.ts">generateToken</a>({ ...params }) -> UploadGenerateTokenResponse</code>
-- <code title="post /api/v1/uploads/{token}">client.uploads.<a href="./src/resources/uploads.ts">uploadWithToken</a>(token, body) -> UploadUploadWithTokenResponse</code>
+- <code title="post /api/v1/uploads/{token}">client.uploads.<a href="./src/resources/uploads.ts">uploadWithToken</a>(token, file) -> UploadUploadWithTokenResponse</code>
 
 # Files
 

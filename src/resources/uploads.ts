@@ -79,11 +79,11 @@ export class Uploads extends APIResource {
    */
   uploadWithToken(
     token: string,
-    body: Uploadable,
+    file: Uploadable,
     options?: RequestOptions,
   ): APIPromise<UploadUploadWithTokenResponse> {
     return this._client.post(path`/api/v1/uploads/${token}`, {
-      body: body,
+      body: file,
       ...options,
       headers: buildHeaders([{ 'Content-Type': 'application/octet-stream' }, options?.headers]),
     });
