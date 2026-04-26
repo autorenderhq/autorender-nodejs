@@ -2,17 +2,11 @@
 
 import Autorender, { toFile } from '@autorender/nodejs';
 
-const client = new Autorender({
-  apiKey: 'My API Key',
-  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
-});
+const client = new Autorender({ apiKey: 'My API Key', baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010' });
 
 describe('resource uploads', () => {
   test('create: only required params', async () => {
-    const responsePromise = client.uploads.create({
-      file: await toFile(Buffer.from('Example data'), 'README.md'),
-      file_name: 'product.jpg',
-    });
+    const responsePromise = client.uploads.create({ file: await toFile(Buffer.from('Example data'), 'README.md'), file_name: 'product.jpg' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -24,16 +18,16 @@ describe('resource uploads', () => {
 
   test('create: required and optional params', async () => {
     const response = await client.uploads.create({
-      file: await toFile(Buffer.from('Example data'), 'README.md'),
-      file_name: 'product.jpg',
-      custom_id: 'sku123',
-      folder: 'products/sku123',
-      metadata: '{"productId":"123"}',
-      random_prefix: 'random_prefix',
-      tags: 'product,thumbnail',
-      transform: 'transform',
-      webhook_url: 'webhook_url',
-    });
+    file: await toFile(Buffer.from('Example data'), 'README.md'),
+    file_name: 'product.jpg',
+    custom_id: 'sku123',
+    folder: 'products/sku123',
+    metadata: '{"productId":"123"}',
+    random_prefix: 'random_prefix',
+    tags: 'product,thumbnail',
+    transform: 'transform',
+    webhook_url: 'webhook_url',
+  });
   });
 
   test('createFromURL: only required params', async () => {
@@ -49,15 +43,15 @@ describe('resource uploads', () => {
 
   test('createFromURL: required and optional params', async () => {
     const response = await client.uploads.createFromURL({
-      remote_url: 'https://example.com',
-      custom_id: 'custom_id',
-      file_name: 'file_name',
-      folder: 'folder',
-      metadata: 'metadata',
-      random_prefix: 'random_prefix',
-      tags: 'tags',
-      webhook_url: 'https://example.com',
-    });
+    remote_url: 'https://example.com',
+    custom_id: 'custom_id',
+    file_name: 'file_name',
+    folder: 'folder',
+    metadata: 'metadata',
+    random_prefix: 'random_prefix',
+    tags: 'tags',
+    webhook_url: 'https://example.com',
+  });
   });
 
   test('generateToken: only required params', async () => {
@@ -73,23 +67,20 @@ describe('resource uploads', () => {
 
   test('generateToken: required and optional params', async () => {
     const response = await client.uploads.generateToken({
-      file_name: 'file_name',
-      allow_override: { folder: true, tags: true },
-      custom_id: 'custom_id',
-      folder: 'folder',
-      max_file_size: -9007199254740991,
-      metadata: { foo: 'bar' },
-      random_prefix: true,
-      tags: ['string'],
-      ttl_seconds: -9007199254740991,
-    });
+    file_name: 'file_name',
+    allow_override: { folder: true, tags: true },
+    custom_id: 'custom_id',
+    folder: 'folder',
+    max_file_size: -9007199254740991,
+    metadata: { foo: 'bar' },
+    random_prefix: true,
+    tags: ['string'],
+    ttl_seconds: -9007199254740991,
+  });
   });
 
   test('uploadWithToken', async () => {
-    const responsePromise = client.uploads.uploadWithToken(
-      'token',
-      await toFile(Buffer.from('Example data'), 'README.md'),
-    );
+    const responsePromise = client.uploads.uploadWithToken('token', await toFile(Buffer.from('Example data'), 'README.md'));
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
