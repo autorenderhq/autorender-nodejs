@@ -24,10 +24,7 @@ export class Uploads extends APIResource {
    * ```
    */
   create(body: UploadCreateParams, options?: RequestOptions): APIPromise<UploadCreateResponse> {
-    return this._client.post(
-      '/api/v1/uploads',
-      multipartFormRequestOptions({ body, ...options }, this._client),
-    );
+    return this._client.post('/api/v1/uploads', multipartFormRequestOptions({ body, ...options }, this._client));
   }
 
   /**
@@ -40,10 +37,7 @@ export class Uploads extends APIResource {
    * });
    * ```
    */
-  createFromURL(
-    body: UploadCreateFromURLParams,
-    options?: RequestOptions,
-  ): APIPromise<UploadCreateFromURLResponse> {
+  createFromURL(body: UploadCreateFromURLParams, options?: RequestOptions): APIPromise<UploadCreateFromURLResponse> {
     return this._client.post('/api/v1/uploads/remote', { body, ...options });
   }
 
@@ -58,10 +52,7 @@ export class Uploads extends APIResource {
    * });
    * ```
    */
-  generateToken(
-    body: UploadGenerateTokenParams,
-    options?: RequestOptions,
-  ): APIPromise<UploadGenerateTokenResponse> {
+  generateToken(body: UploadGenerateTokenParams, options?: RequestOptions): APIPromise<UploadGenerateTokenResponse> {
     return this._client.post('/api/v1/generate-token', { body, ...options });
   }
 
@@ -77,16 +68,8 @@ export class Uploads extends APIResource {
    * );
    * ```
    */
-  uploadWithToken(
-    token: string,
-    file: Uploadable,
-    options?: RequestOptions,
-  ): APIPromise<UploadUploadWithTokenResponse> {
-    return this._client.post(path`/api/v1/uploads/${token}`, {
-      body: file,
-      ...options,
-      headers: buildHeaders([{ 'Content-Type': 'application/octet-stream' }, options?.headers]),
-    });
+  uploadWithToken(token: string, file: Uploadable, options?: RequestOptions): APIPromise<UploadUploadWithTokenResponse> {
+    return this._client.post(path`/api/v1/uploads/${token}`, { body: file, ...options, headers: buildHeaders([{'Content-Type': 'application/octet-stream'}, options?.headers]) });
   }
 }
 
@@ -393,6 +376,6 @@ export declare namespace Uploads {
     type UploadUploadWithTokenResponse as UploadUploadWithTokenResponse,
     type UploadCreateParams as UploadCreateParams,
     type UploadCreateFromURLParams as UploadCreateFromURLParams,
-    type UploadGenerateTokenParams as UploadGenerateTokenParams,
+    type UploadGenerateTokenParams as UploadGenerateTokenParams
   };
 }

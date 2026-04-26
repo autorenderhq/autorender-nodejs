@@ -21,20 +21,13 @@ export class Folders extends APIResource {
    * Delete folder
    */
   delete(folderNo: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.delete(path`/api/v1/folders/${folderNo}`, {
-      ...options,
-      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
-    });
+    return this._client.delete(path`/api/v1/folders/${folderNo}`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
   }
 
   /**
    * Rename folder
    */
-  rename(
-    folderNo: string,
-    body: FolderRenameParams,
-    options?: RequestOptions,
-  ): APIPromise<FolderRenameResponse> {
+  rename(folderNo: string, body: FolderRenameParams, options?: RequestOptions): APIPromise<FolderRenameResponse> {
     return this._client.post(path`/api/v1/folders/rename/${folderNo}`, { body, ...options });
   }
 }
@@ -101,6 +94,6 @@ export declare namespace Folders {
     type FolderCreateResponse as FolderCreateResponse,
     type FolderRenameResponse as FolderRenameResponse,
     type FolderCreateParams as FolderCreateParams,
-    type FolderRenameParams as FolderRenameParams,
+    type FolderRenameParams as FolderRenameParams
   };
 }

@@ -87,8 +87,7 @@ export class PagePromise<
     super(
       client,
       request,
-      async (client, props) =>
-        new Page(client, props.response, await defaultParseResponse(client, props), props.options),
+      async (client, props) => new Page(client, props.response, await defaultParseResponse(client, props), props.options)
     );
   }
 
@@ -132,12 +131,7 @@ export class PagePagination<Item> extends AbstractPage<Item> implements PagePagi
 
   total_results: number;
 
-  constructor(
-    client: Autorender,
-    response: Response,
-    body: PagePaginationResponse<Item>,
-    options: FinalRequestOptions,
-  ) {
+  constructor(client: Autorender, response: Response, body: PagePaginationResponse<Item>, options: FinalRequestOptions) {
     super(client, response, body, options);
 
     this.data = body.data || [];
@@ -151,7 +145,7 @@ export class PagePagination<Item> extends AbstractPage<Item> implements PagePagi
   }
 
   nextPageRequestOptions(): PageRequestOptions | null {
-    const currentPage = this.current_page;
+    const currentPage = this.current_page
 
     return {
       ...this.options,
