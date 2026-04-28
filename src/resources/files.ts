@@ -27,7 +27,10 @@ export class Files extends APIResource {
   /**
    * List/search files with pagination, filtering, and sorting.
    */
-  list(query: FileListParams | null | undefined = {}, options?: RequestOptions): APIPromise<FileListResponse> {
+  list(
+    query: FileListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<FileListResponse> {
     return this._client.get('/api/v1/files', { query, ...options });
   }
 
@@ -35,7 +38,10 @@ export class Files extends APIResource {
    * Delete file
    */
   delete(fileNo: string, options?: RequestOptions): APIPromise<void> {
-    return this._client.delete(path`/api/v1/files/${fileNo}`, { ...options, headers: buildHeaders([{Accept: '*/*'}, options?.headers]) });
+    return this._client.delete(path`/api/v1/files/${fileNo}`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
   }
 
   /**
@@ -302,6 +308,6 @@ export declare namespace Files {
     type FileRenameResponse as FileRenameResponse,
     type FileUpdateParams as FileUpdateParams,
     type FileListParams as FileListParams,
-    type FileRenameParams as FileRenameParams
+    type FileRenameParams as FileRenameParams,
   };
 }
