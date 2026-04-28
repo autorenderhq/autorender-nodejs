@@ -2,7 +2,10 @@
 
 import Autorender from '@autorender/nodejs';
 
-const client = new Autorender({ apiKey: 'My API Key', baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010' });
+const client = new Autorender({
+  apiKey: 'My API Key',
+  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
+});
 
 describe('resource files', () => {
   test('retrieve', async () => {
@@ -40,17 +43,20 @@ describe('resource files', () => {
 
   test('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(client.files.list({
-    folderNo: 'folderNo',
-    limit: 1,
-    name: 'name',
-    page: 1,
-    path: 'path',
-    sort: 'created_at_asc',
-    tags: 'tags',
-  }, { path: '/_stainless_unknown_path' }))
-      .rejects
-      .toThrow(Autorender.NotFoundError);
+    await expect(
+      client.files.list(
+        {
+          folderNo: 'folderNo',
+          limit: 1,
+          name: 'name',
+          page: 1,
+          path: 'path',
+          sort: 'created_at_asc',
+          tags: 'tags',
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(Autorender.NotFoundError);
   });
 
   test('delete', async () => {
