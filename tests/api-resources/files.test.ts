@@ -19,17 +19,6 @@ describe('resource files', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('update', async () => {
-    const responsePromise = client.files.update('fileNo', {});
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
   test('list', async () => {
     const responsePromise = client.files.list();
     const rawResponse = await responsePromise.asResponse();
@@ -46,13 +35,11 @@ describe('resource files', () => {
     await expect(
       client.files.list(
         {
-          folderNo: 'folderNo',
+          folder_no: 'folder_no',
           limit: 1,
-          name: 'name',
           page: 1,
-          path: 'path',
-          sort: 'created_at_asc',
-          tags: 'tags',
+          search: 'search',
+          sort: 'name_asc',
         },
         { path: '/_stainless_unknown_path' },
       ),

@@ -18,13 +18,6 @@ export class Files extends APIResource {
   }
 
   /**
-   * Update file tags/metadata
-   */
-  update(fileNo: string, body: FileUpdateParams, options?: RequestOptions): APIPromise<FileUpdateResponse> {
-    return this._client.patch(path`/api/v1/files/${fileNo}`, { body, ...options });
-  }
-
-  /**
    * List/search files with pagination, filtering, and sorting.
    */
   list(
@@ -100,16 +93,16 @@ export namespace FileRetrieveResponse {
 }
 
 /**
- * Updated file
+ * Files list
  */
-export interface FileUpdateResponse {
-  data: FileUpdateResponse.Data;
+export interface FileListResponse {
+  files: Array<FileListResponse.File>;
 
-  success: true;
+  meta: FileListResponse.Meta;
 }
 
-export namespace FileUpdateResponse {
-  export interface Data {
+export namespace FileListResponse {
+  export interface File {
     id: string;
 
     created_at: string;
@@ -144,60 +137,17 @@ export namespace FileUpdateResponse {
 
     width: number | null;
   }
-}
 
-/**
- * Files list
- */
-export interface FileListResponse {
-  is_page_next: boolean;
+  export interface Meta {
+    hasNext: boolean;
 
-  items: Array<FileListResponse.Item>;
+    hasPrev: boolean;
 
-  limit: number;
+    limit: number;
 
-  page: number;
+    page: number;
 
-  total_count: number;
-
-  total_pages: number;
-}
-
-export namespace FileListResponse {
-  export interface Item {
-    id: string;
-
-    created_at: string;
-
-    file_no: string;
-
-    folder_name: string | null;
-
-    folder_no: string | null;
-
-    format: string | null;
-
-    height: number | null;
-
-    metadata: { [key: string]: unknown } | null;
-
-    mime_type: string;
-
-    name: string;
-
-    path: string;
-
-    size: number;
-
-    source: string;
-
-    tags: Array<string>;
-
-    updated_at: string | null;
-
-    url: string;
-
-    width: number | null;
+    total: number;
   }
 }
 
@@ -248,49 +198,22 @@ export namespace FileRenameResponse {
   }
 }
 
-export interface FileUpdateParams {
-  /**
-   * Tags to add to the existing set
-   */
-  add_tags?: Array<string>;
-
-  /**
-   * Metadata to merge into existing metadata
-   */
-  metadata?: { [key: string]: unknown };
-
-  /**
-   * Tags to remove from the existing set
-   */
-  remove_tags?: Array<string>;
-}
-
 export interface FileListParams {
   /**
-   * Exact folder number
+   * Filter by folder number
    */
-  folderNo?: string;
+  folder_no?: string;
 
   limit?: number;
-
-  /**
-   * Partial name match (case-insensitive)
-   */
-  name?: string;
 
   page?: number;
 
   /**
-   * Folder prefix (e.g. products/sku123/)
+   * Partial name match (case-insensitive)
    */
-  path?: string;
+  search?: string;
 
-  sort?: 'created_at_asc' | 'created_at_desc' | 'size_asc' | 'size_desc';
-
-  /**
-   * Comma-separated tags
-   */
-  tags?: string;
+  sort?: 'name_asc' | 'name_desc' | 'size_asc' | 'size_desc' | 'created_at_asc' | 'created_at_desc';
 }
 
 export interface FileRenameParams {
@@ -303,10 +226,8 @@ export interface FileRenameParams {
 export declare namespace Files {
   export {
     type FileRetrieveResponse as FileRetrieveResponse,
-    type FileUpdateResponse as FileUpdateResponse,
     type FileListResponse as FileListResponse,
     type FileRenameResponse as FileRenameResponse,
-    type FileUpdateParams as FileUpdateParams,
     type FileListParams as FileListParams,
     type FileRenameParams as FileRenameParams,
   };

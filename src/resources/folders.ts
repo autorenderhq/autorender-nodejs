@@ -18,6 +18,16 @@ export class Folders extends APIResource {
   }
 
   /**
+   * List folders
+   */
+  list(
+    query: FolderListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<FolderListResponse> {
+    return this._client.get('/api/v1/folders', { query, ...options });
+  }
+
+  /**
    * Delete folder
    */
   delete(folderNo: string, options?: RequestOptions): APIPromise<void> {
@@ -59,6 +69,31 @@ export interface FolderCreateResponse {
 }
 
 /**
+ * List of folders
+ */
+export interface FolderListResponse {
+  folders: Array<FolderListResponse.Folder>;
+}
+
+export namespace FolderListResponse {
+  export interface Folder {
+    id: string;
+
+    created_at: string;
+
+    folder_no: string;
+
+    name: string;
+
+    parent_folder_no: string | null;
+
+    path: string;
+
+    updated_at: string | null;
+  }
+}
+
+/**
  * Renamed folder
  */
 export interface FolderRenameResponse {
@@ -81,12 +116,26 @@ export interface FolderCreateParams {
   /**
    * Folder name without slashes
    */
-  folder_name: string;
+  name: string;
 
   /**
-   * Optional parent path, e.g. products/sku123
+   * Parent folder number
    */
-  path?: string;
+  parent_folder_no?: string;
+}
+
+export interface FolderListParams {
+  /**
+   * Filter by parent folder number
+   */
+  parent_folder_no?: string;
+
+  /**
+   * Partial name match (case-insensitive)
+   */
+  search?: string;
+
+  sort?: 'name_asc' | 'name_desc' | 'created_at_asc' | 'created_at_desc';
 }
 
 export interface FolderRenameParams {
@@ -99,8 +148,10 @@ export interface FolderRenameParams {
 export declare namespace Folders {
   export {
     type FolderCreateResponse as FolderCreateResponse,
+    type FolderListResponse as FolderListResponse,
     type FolderRenameResponse as FolderRenameResponse,
     type FolderCreateParams as FolderCreateParams,
+    type FolderListParams as FolderListParams,
     type FolderRenameParams as FolderRenameParams,
   };
 }
