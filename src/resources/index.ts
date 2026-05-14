@@ -3,27 +3,31 @@
 export {
   Files,
   type FileRetrieveResponse,
-  type FileUpdateResponse,
   type FileListResponse,
   type FileRenameResponse,
-  type FileUpdateParams,
   type FileListParams,
   type FileRenameParams,
 } from './files';
 export {
   Folders,
   type FolderCreateResponse,
+  type FolderListResponse,
   type FolderRenameResponse,
   type FolderCreateParams,
+  type FolderListParams,
   type FolderRenameParams,
 } from './folders';
+export {
+  MultipartUploads,
+  type MultipartUploadCompleteResponse,
+  type MultipartUploadStartResponse,
+  type MultipartUploadCompleteParams,
+  type MultipartUploadStartParams,
+} from './multipart-uploads';
 export {
   Uploads,
   type UploadCreateResponse,
   type UploadCreateFromURLResponse,
-  type UploadGenerateTokenResponse,
-  type UploadUploadWithTokenResponse,
   type UploadCreateParams,
   type UploadCreateFromURLParams,
-  type UploadGenerateTokenParams,
 } from './uploads';

@@ -25,25 +25,29 @@ import {
   FileRenameParams,
   FileRenameResponse,
   FileRetrieveResponse,
-  FileUpdateParams,
-  FileUpdateResponse,
   Files,
 } from './resources/files';
 import {
   FolderCreateParams,
   FolderCreateResponse,
+  FolderListParams,
+  FolderListResponse,
   FolderRenameParams,
   FolderRenameResponse,
   Folders,
 } from './resources/folders';
 import {
+  MultipartUploadCompleteParams,
+  MultipartUploadCompleteResponse,
+  MultipartUploadStartParams,
+  MultipartUploadStartResponse,
+  MultipartUploads,
+} from './resources/multipart-uploads';
+import {
   UploadCreateFromURLParams,
   UploadCreateFromURLResponse,
   UploadCreateParams,
   UploadCreateResponse,
-  UploadGenerateTokenParams,
-  UploadGenerateTokenResponse,
-  UploadUploadWithTokenResponse,
   Uploads as UploadsAPIUploads,
 } from './resources/uploads';
 import { type Fetch } from './internal/builtin-types';
@@ -800,11 +804,16 @@ export class Autorender {
    * Folder management endpoints (API key required)
    */
   folders: API.Folders = new API.Folders(this);
+  /**
+   * Upload endpoints (API key required)
+   */
+  multipartUploads: API.MultipartUploads = new API.MultipartUploads(this);
 }
 
 Autorender.Uploads = UploadsAPIUploads;
 Autorender.Files = Files;
 Autorender.Folders = Folders;
+Autorender.MultipartUploads = MultipartUploads;
 
 export declare namespace Autorender {
   export type RequestOptions = Opts.RequestOptions;
@@ -819,20 +828,15 @@ export declare namespace Autorender {
     UploadsAPIUploads as Uploads,
     type UploadCreateResponse as UploadCreateResponse,
     type UploadCreateFromURLResponse as UploadCreateFromURLResponse,
-    type UploadGenerateTokenResponse as UploadGenerateTokenResponse,
-    type UploadUploadWithTokenResponse as UploadUploadWithTokenResponse,
     type UploadCreateParams as UploadCreateParams,
     type UploadCreateFromURLParams as UploadCreateFromURLParams,
-    type UploadGenerateTokenParams as UploadGenerateTokenParams,
   };
 
   export {
     Files as Files,
     type FileRetrieveResponse as FileRetrieveResponse,
-    type FileUpdateResponse as FileUpdateResponse,
     type FileListResponse as FileListResponse,
     type FileRenameResponse as FileRenameResponse,
-    type FileUpdateParams as FileUpdateParams,
     type FileListParams as FileListParams,
     type FileRenameParams as FileRenameParams,
   };
@@ -840,8 +844,18 @@ export declare namespace Autorender {
   export {
     Folders as Folders,
     type FolderCreateResponse as FolderCreateResponse,
+    type FolderListResponse as FolderListResponse,
     type FolderRenameResponse as FolderRenameResponse,
     type FolderCreateParams as FolderCreateParams,
+    type FolderListParams as FolderListParams,
     type FolderRenameParams as FolderRenameParams,
+  };
+
+  export {
+    MultipartUploads as MultipartUploads,
+    type MultipartUploadCompleteResponse as MultipartUploadCompleteResponse,
+    type MultipartUploadStartResponse as MultipartUploadStartResponse,
+    type MultipartUploadCompleteParams as MultipartUploadCompleteParams,
+    type MultipartUploadStartParams as MultipartUploadStartParams,
   };
 }
