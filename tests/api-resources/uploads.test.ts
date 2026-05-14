@@ -59,43 +59,4 @@ describe('resource uploads', () => {
       webhook_url: 'https://example.com',
     });
   });
-
-  test('generateToken: only required params', async () => {
-    const responsePromise = client.uploads.generateToken({ file_name: 'file_name' });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  test('generateToken: required and optional params', async () => {
-    const response = await client.uploads.generateToken({
-      file_name: 'file_name',
-      allow_override: { folder: true, tags: true },
-      custom_id: 'custom_id',
-      folder: 'folder',
-      max_file_size: -9007199254740991,
-      metadata: { foo: 'bar' },
-      random_prefix: true,
-      tags: ['string'],
-      ttl_seconds: -9007199254740991,
-    });
-  });
-
-  test('uploadWithToken', async () => {
-    const responsePromise = client.uploads.uploadWithToken(
-      'token',
-      await toFile(Buffer.from('Example data'), 'README.md'),
-    );
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
 });

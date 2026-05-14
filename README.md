@@ -4,7 +4,7 @@
 
 This library provides convenient access to the Autorender REST API from server-side TypeScript or JavaScript.
 
-The REST API documentation can be found on [docs.autorender.io](https://docs.autorender.io). The full API of this library can be found in [api.md](api.md).
+The REST API documentation can be found on [autorender.mintlify.app](https://autorender.mintlify.app/). The full API of this library can be found in [api.md](api.md).
 
 It is generated with [Stainless](https://www.stainless.com/).
 
@@ -26,12 +26,9 @@ const client = new Autorender({
   apiKey: process.env['AUTORENDER_API_KEY'], // This is the default and can be omitted
 });
 
-const upload = await client.uploads.create({
-  file: fs.createReadStream('path/to/file'),
-  file_name: 'photo.jpg',
-});
+const files = await client.files.list({ limit: 10 });
 
-console.log(upload.id);
+console.log(files.files);
 ```
 
 ### Request & Response types
@@ -276,7 +273,7 @@ parameter. This library doesn't validate at runtime that the request matches the
 send will be sent as-is.
 
 ```ts
-client.uploads.create({
+client.files.list({
   // ...
   // @ts-expect-error baz is not yet public
   baz: 'undocumented option',

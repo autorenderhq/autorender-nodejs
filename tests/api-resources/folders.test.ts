@@ -9,7 +9,7 @@ const client = new Autorender({
 
 describe('resource folders', () => {
   test('create: only required params', async () => {
-    const responsePromise = client.folders.create({ folder_name: 'folder_name' });
+    const responsePromise = client.folders.create({ name: 'x' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -20,7 +20,32 @@ describe('resource folders', () => {
   });
 
   test('create: required and optional params', async () => {
-    const response = await client.folders.create({ folder_name: 'folder_name', path: 'path' });
+    const response = await client.folders.create({ name: 'x', parent_folder_no: 'parent_folder_no' });
+  });
+
+  test('list', async () => {
+    const responsePromise = client.folders.list();
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  test('list: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.folders.list(
+        {
+          parent_folder_no: 'parent_folder_no',
+          search: 'search',
+          sort: 'name_asc',
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(Autorender.NotFoundError);
   });
 
   test('delete', async () => {

@@ -2,7 +2,7 @@
   "name": "@autorender/nodejs",
   "version": "0.0.1",
   "description": "The official TypeScript library for the Autorender API",
-  "author": "Autorender <support@autorender.io>",
+  "author": "Autorender <engineering@autorender.io>",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
   "type": "commonjs",
