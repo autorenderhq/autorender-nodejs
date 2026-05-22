@@ -112,7 +112,7 @@ export interface PagePaginationResponse<Item> {
 
   current_page: number;
 
-  has_next_page: boolean;
+  has_next: boolean;
 
   total_results: number;
 }
@@ -128,7 +128,7 @@ export class PagePagination<Item> extends AbstractPage<Item> implements PagePagi
 
   current_page: number;
 
-  has_next_page: boolean;
+  has_next: boolean;
 
   total_results: number;
 
@@ -142,7 +142,7 @@ export class PagePagination<Item> extends AbstractPage<Item> implements PagePagi
 
     this.data = body.data || [];
     this.current_page = body.current_page || 0;
-    this.has_next_page = body.has_next_page || false;
+    this.has_next = body.has_next || false;
     this.total_results = body.total_results || 0;
   }
 
