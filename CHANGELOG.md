@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.1.1 (2026-05-24)
+
+Full Changelog: [v0.1.0...v0.1.1](https://github.com/autorenderhq/autorender-nodejs/compare/v0.1.0...v0.1.1)
+
+### Bug Fixes
+
+* **typescript:** upgrade tsc-multi so that it works with Node 26 ([c98615b](https://github.com/autorenderhq/autorender-nodejs/commit/c98615bbce6067118b1ab4b95ec77e2fe503ea98))
+
+
+### Chores
+
+* configure new SDK language ([46261b6](https://github.com/autorenderhq/autorender-nodejs/commit/46261b6d2131d16e7d406a26b18dd946720d1220))
+* configure new SDK language ([a13431e](https://github.com/autorenderhq/autorender-nodejs/commit/a13431e5a04d07c4bc4d89231bd98026eecc0dc4))
+* **tests:** remove redundant File import ([b29da4b](https://github.com/autorenderhq/autorender-nodejs/commit/b29da4b3129861228adff3727898d630fb084940))
+
 ## 0.1.0 (2026-05-14)
 
 Full Changelog: [v0.0.1...v0.1.0](https://github.com/autorenderhq/autorender-nodejs/compare/v0.0.1...v0.1.0)
