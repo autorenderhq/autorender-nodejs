@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.1](https://github.com/autorenderhq/autorender-nodejs/compare/v0.2.0...v0.2.1) (2026-05-25)
+
+
+### Bug Fixes
+
+* set npm registry to npmjs.org for yarn publish ([25b55ed](https://github.com/autorenderhq/autorender-nodejs/commit/25b55eddc35104173ad61dcd810a092dfc3a711a))
+
 ## [0.2.0](https://github.com/autorenderhq/autorender-nodejs/compare/v0.1.0...v0.2.0) (2026-05-25)
 
 
