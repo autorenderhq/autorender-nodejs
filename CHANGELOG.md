@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.2.0](https://github.com/autorenderhq/autorender-nodejs/compare/v0.1.0...v0.2.0) (2026-05-25)
+
+
+### Features
+
+* add stlc generate workflow and setup-stlc action ([5c95079](https://github.com/autorenderhq/autorender-nodejs/commit/5c9507938a708d3b279e5012f1d47d53dc4aad90))
+* add test CI job ([34db444](https://github.com/autorenderhq/autorender-nodejs/commit/34db444bd17632292dfe99c48ef9f4265a726a36))
+* initial stlc build ([7d8e2ee](https://github.com/autorenderhq/autorender-nodejs/commit/7d8e2eee5a126bdfb500b55fec99d52794fe341b))
+
+
+### Bug Fixes
+
+* **python:** rename pagination field has_next_page -&gt; has_next to fix pyright lint ([4d9d33f](https://github.com/autorenderhq/autorender-nodejs/commit/4d9d33ffcb3e4cf91e5585d2890573d51d3e6c67))
+
 ## 0.1.0 (2026-05-14)
 
 Full Changelog: [v0.0.1...v0.1.0](https://github.com/autorenderhq/autorender-nodejs/compare/v0.0.1...v0.1.0)
