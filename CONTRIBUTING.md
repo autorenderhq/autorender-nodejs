@@ -1,3 +1,12 @@
+# Contributing
+
+> **Note:** This SDK is automatically generated from the Autorender API specification.
+> Code pull requests are not accepted — changes to generated code will be overwritten on the next generation cycle.
+>
+> **Bug reports and feature requests are welcome** — please [open an issue](https://github.com/autorenderhq/autorender-nodejs/issues).
+
+---
+
 ## Setting up the environment
 
 This repository uses [`yarn@v1`](https://classic.yarnpkg.com/lang/en/docs/install).
