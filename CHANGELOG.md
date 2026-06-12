@@ -1,5 +1,37 @@
 # Changelog
 
+## [0.3.0](https://github.com/autorenderhq/autorender-nodejs/compare/v0.2.1...v0.3.0) (2026-06-12)
+
+
+### Features
+
+* **java:** enable maven publishing with release-please ([0e6c671](https://github.com/autorenderhq/autorender-nodejs/commit/0e6c671a4e0539f148cef06c99c7035b359f172a))
+* **ruby:** enable rubygems publishing with release-please ([4c55796](https://github.com/autorenderhq/autorender-nodejs/commit/4c557964d06abbe852ebc435e0262d0ea94f1717))
+
+
+### Bug Fixes
+
+* add overlay step to preserve production-managed files in release branch ([f685d56](https://github.com/autorenderhq/autorender-nodejs/commit/f685d56e038f9e70e89555d5013750316787e4cb))
+* strip internal workflows from production release branch ([8263d52](https://github.com/autorenderhq/autorender-nodejs/commit/8263d52d2d9e77e896acedf4df407caab75e1697))
+* update promote workflow and add back-sync from production ([329420f](https://github.com/autorenderhq/autorender-nodejs/commit/329420f280ea15272b16b549dd1dbcdef6eb65fd))
+* update promote workflow and add back-sync from production ([e53e322](https://github.com/autorenderhq/autorender-nodejs/commit/e53e3225c01042d773f2baecadd3199a25c5eb4c))
+* use blob comparison in overlay; add language-specific version files ([3e821e6](https://github.com/autorenderhq/autorender-nodejs/commit/3e821e6d46aef4e3c3f2c992fca1bd9e7ed846fb))
+* use persist-credentials: false in sync workflow ([482c928](https://github.com/autorenderhq/autorender-nodejs/commit/482c928f53c161f91b6a50598fc73a37c00c6910))
+* use persist-credentials: false in sync workflow ([caf68da](https://github.com/autorenderhq/autorender-nodejs/commit/caf68da5805cc577d28c67295ce4bcb03badac1b))
+
+
+### Chores
+
+* preserve production-managed files ([3f65967](https://github.com/autorenderhq/autorender-nodejs/commit/3f65967fa5a7b51f44e72bf7f8e8707c429e7639))
+* remove staging-only workflows from production ([fbd6d19](https://github.com/autorenderhq/autorender-nodejs/commit/fbd6d198dbfe6450dff87fa5fb6d697aa5035cbb))
+* remove staging-only workflows from production ([d3b44a7](https://github.com/autorenderhq/autorender-nodejs/commit/d3b44a74d108974416d50b6af6c14523bf743453))
+* strip internal workflows; preserve production-managed files ([3b2abbd](https://github.com/autorenderhq/autorender-nodejs/commit/3b2abbdb4f06b453a9e45701d053a545d684d03c))
+
+
+### Documentation
+
+* add auto-generated notice to CONTRIBUTING.md ([23f4d04](https://github.com/autorenderhq/autorender-nodejs/commit/23f4d0424fcd693df951fbc7592fb9f74ea5f633))
+
 ## 0.2.1 (2026-05-25)
 
 Full Changelog: [v0.2.0...v0.2.1](https://github.com/autorenderhq/autorender-nodejs/compare/v0.2.0...v0.2.1)
