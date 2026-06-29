@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.1](https://github.com/autorenderhq/autorender-nodejs/compare/v0.3.0...v0.3.1) (2026-06-29)
+
+
+### Chores
+
+* remove Stainless attribution from README and SECURITY ([9f7a663](https://github.com/autorenderhq/autorender-nodejs/commit/9f7a6632bbe1b9c72b6846e83c4080781910f3d9))
+* strip internal workflows; preserve production-managed files ([7ddbe40](https://github.com/autorenderhq/autorender-nodejs/commit/7ddbe40adce96f7cc299f714b7338d88f105af5c))
+
 ## [0.3.0](https://github.com/autorenderhq/autorender-nodejs/compare/v0.2.1...v0.3.0) (2026-06-12)
 
 
