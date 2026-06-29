@@ -220,9 +220,9 @@ export interface UploadCreateFromURLParams {
   random_prefix?: string;
 
   /**
-   * Comma-separated tags
+   * Tags array or comma-separated string
    */
-  tags?: string;
+  tags?: Array<string> | string;
 
   webhook_url?: string;
 }
