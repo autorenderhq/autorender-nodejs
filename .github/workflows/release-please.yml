@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   release-please:
-    if: github.repository == 'autorenderhq/autorender-nodejs'
+    if: github.repository == 'autorender/autorender-nodejs'
     runs-on: ubuntu-latest
 
     steps:

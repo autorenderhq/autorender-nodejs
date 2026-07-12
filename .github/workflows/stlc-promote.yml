@@ -11,9 +11,9 @@ permissions:
 jobs:
   promote:
     runs-on: ubuntu-latest
-    if: github.repository == 'autorenderhq/autorender-nodejs-staging'
+    if: github.repository == 'autorender/autorender-nodejs-staging'
     env:
-      PRODUCTION_REPO: autorenderhq/autorender-nodejs
+      PRODUCTION_REPO: autorender/autorender-nodejs
       GH_TOKEN: ${{ secrets.PRODUCTION_REPO_TOKEN }}
     steps:
       - name: Check out staging
