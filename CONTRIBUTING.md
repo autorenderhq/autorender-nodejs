@@ -3,7 +3,7 @@
 > **Note:** This SDK is automatically generated from the Autorender API specification.
 > Code pull requests are not accepted — changes to generated code will be overwritten on the next generation cycle.
 >
-> **Bug reports and feature requests are welcome** — please [open an issue](https://github.com/autorenderhq/autorender-nodejs/issues).
+> **Bug reports and feature requests are welcome** — please [open an issue](https://github.com/autorender/autorender-nodejs/issues).
 
 ---
 
@@ -51,14 +51,14 @@ If you’d like to use the repository from source, you can either install from g
 To install via git:
 
 ```sh
-$ npm install git+ssh://git@github.com:autorenderhq/autorender-nodejs.git
+$ npm install git+ssh://git@github.com:autorender/autorender-nodejs.git
 ```
 
 Alternatively, to link a local copy of the repo:
 
 ```sh
 # Clone
-$ git clone https://www.github.com/autorenderhq/autorender-nodejs
+$ git clone https://www.github.com/autorender/autorender-nodejs
 $ cd autorender-nodejs
 
 # With yarn
@@ -108,7 +108,7 @@ the changes aren't made through the automated pipeline, you may want to make rel
 
 ### Publish with a GitHub workflow
 
-You can release to package managers by using [the `Publish NPM` GitHub action](https://www.github.com/autorenderhq/autorender-nodejs/actions/workflows/publish-npm.yml). This requires a setup organization or repository secret to be set up.
+You can release to package managers by using [the `Publish NPM` GitHub action](https://www.github.com/autorender/autorender-nodejs/actions/workflows/publish-npm.yml). This requires a setup organization or repository secret to be set up.
 
 ### Publish manually
 
