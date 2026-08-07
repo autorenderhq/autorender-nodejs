@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.2](https://github.com/autorender/autorender-nodejs/compare/v0.3.1...v0.3.2) (2026-07-12)
+
+
+### Chores
+
+* rename autorenderhq -&gt; autorender references (GitHub org rename) ([#17](https://github.com/autorender/autorender-nodejs/issues/17)) ([aad5e8d](https://github.com/autorender/autorender-nodejs/commit/aad5e8d7a92b2052cd5bdcb9d759384ae2fecbc0))
+
 ## [0.3.1](https://github.com/autorender/autorender-nodejs/compare/v0.3.0...v0.3.1) (2026-06-29)
 
 
