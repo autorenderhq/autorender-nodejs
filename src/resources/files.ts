@@ -2,6 +2,7 @@
 
 import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
+import { PagePagination, type PagePaginationParams, PagePromise } from '../core/pagination';
 import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
@@ -23,8 +24,8 @@ export class Files extends APIResource {
   list(
     query: FileListParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<FileListResponse> {
-    return this._client.get('/api/v1/files', { query, ...options });
+  ): PagePromise<FileListResponsesPagePagination, FileListResponse> {
+    return this._client.getAPIList('/api/v1/files', PagePagination<FileListResponse>, { query, ...options });
   }
 
   /**
@@ -44,6 +45,8 @@ export class Files extends APIResource {
     return this._client.patch(path`/api/v1/files/${fileNo}/rename`, { body, ...options });
   }
 }
+
+export type FileListResponsesPagePagination = PagePagination<FileListResponse>;
 
 /**
  * File details
@@ -92,63 +95,40 @@ export namespace FileRetrieveResponse {
   }
 }
 
-/**
- * Files list
- */
 export interface FileListResponse {
-  files: Array<FileListResponse.File>;
+  id: string;
 
-  meta: FileListResponse.Meta;
-}
+  created_at: string;
 
-export namespace FileListResponse {
-  export interface File {
-    id: string;
+  file_no: string;
 
-    created_at: string;
+  folder_name: string | null;
 
-    file_no: string;
+  folder_no: string | null;
 
-    folder_name: string | null;
+  format: string | null;
 
-    folder_no: string | null;
+  height: number | null;
 
-    format: string | null;
+  metadata: { [key: string]: unknown } | null;
 
-    height: number | null;
+  mime_type: string;
 
-    metadata: { [key: string]: unknown } | null;
+  name: string;
 
-    mime_type: string;
+  path: string;
 
-    name: string;
+  size: number;
 
-    path: string;
+  source: string;
 
-    size: number;
+  tags: Array<string>;
 
-    source: string;
+  updated_at: string | null;
 
-    tags: Array<string>;
+  url: string;
 
-    updated_at: string | null;
-
-    url: string;
-
-    width: number | null;
-  }
-
-  export interface Meta {
-    hasNext: boolean;
-
-    hasPrev: boolean;
-
-    limit: number;
-
-    page: number;
-
-    total: number;
-  }
+  width: number | null;
 }
 
 /**
@@ -198,15 +178,11 @@ export namespace FileRenameResponse {
   }
 }
 
-export interface FileListParams {
+export interface FileListParams extends PagePaginationParams {
   /**
    * Filter by folder number
    */
   folder_no?: string;
-
-  limit?: number;
-
-  page?: number;
 
   /**
    * Partial name match (case-insensitive)
@@ -228,6 +204,7 @@ export declare namespace Files {
     type FileRetrieveResponse as FileRetrieveResponse,
     type FileListResponse as FileListResponse,
     type FileRenameResponse as FileRenameResponse,
+    type FileListResponsesPagePagination as FileListResponsesPagePagination,
     type FileListParams as FileListParams,
     type FileRenameParams as FileRenameParams,
   };

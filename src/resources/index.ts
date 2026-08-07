@@ -7,6 +7,7 @@ export {
   type FileRenameResponse,
   type FileListParams,
   type FileRenameParams,
+  type FileListResponsesPagePagination,
 } from './files';
 export {
   Folders,

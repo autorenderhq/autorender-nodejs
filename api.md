@@ -21,7 +21,7 @@ Types:
 Methods:
 
 - <code title="get /api/v1/files/{fileNo}">client.files.<a href="./src/resources/files.ts">retrieve</a>(fileNo) -> FileRetrieveResponse</code>
-- <code title="get /api/v1/files">client.files.<a href="./src/resources/files.ts">list</a>({ ...params }) -> FileListResponse</code>
+- <code title="get /api/v1/files">client.files.<a href="./src/resources/files.ts">list</a>({ ...params }) -> FileListResponsesPagePagination</code>
 - <code title="delete /api/v1/files/{fileNo}">client.files.<a href="./src/resources/files.ts">delete</a>(fileNo) -> void</code>
 - <code title="patch /api/v1/files/{fileNo}/rename">client.files.<a href="./src/resources/files.ts">rename</a>(fileNo, { ...params }) -> FileRenameResponse</code>
 
