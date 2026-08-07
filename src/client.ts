@@ -22,6 +22,7 @@ import { APIPromise } from './core/api-promise';
 import {
   FileListParams,
   FileListResponse,
+  FileListResponsesPagePagination,
   FileRenameParams,
   FileRenameResponse,
   FileRetrieveResponse,
@@ -845,6 +846,7 @@ export declare namespace Autorender {
     type FileRetrieveResponse as FileRetrieveResponse,
     type FileListResponse as FileListResponse,
     type FileRenameResponse as FileRenameResponse,
+    type FileListResponsesPagePagination as FileListResponsesPagePagination,
     type FileListParams as FileListParams,
     type FileRenameParams as FileRenameParams,
   };

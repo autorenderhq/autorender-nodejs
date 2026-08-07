@@ -108,13 +108,17 @@ export class PagePromise<
 }
 
 export interface PagePaginationResponse<Item> {
-  data: Array<Item>;
+  files: Array<Item>;
 
-  current_page: number;
+  meta: PagePaginationResponse.Meta;
+}
 
-  has_next: boolean;
+export namespace PagePaginationResponse {
+  export interface Meta {
+    hasNext?: boolean;
 
-  total_results: number;
+    page?: number;
+  }
 }
 
 export interface PagePaginationParams {
@@ -124,13 +128,9 @@ export interface PagePaginationParams {
 }
 
 export class PagePagination<Item> extends AbstractPage<Item> implements PagePaginationResponse<Item> {
-  data: Array<Item>;
+  files: Array<Item>;
 
-  current_page: number;
-
-  has_next: boolean;
-
-  total_results: number;
+  meta: PagePaginationResponse.Meta;
 
   constructor(
     client: Autorender,
@@ -140,18 +140,24 @@ export class PagePagination<Item> extends AbstractPage<Item> implements PagePagi
   ) {
     super(client, response, body, options);
 
-    this.data = body.data || [];
-    this.current_page = body.current_page || 0;
-    this.has_next = body.has_next || false;
-    this.total_results = body.total_results || 0;
+    this.files = body.files || [];
+    this.meta = body.meta || {};
   }
 
   getPaginatedItems(): Item[] {
-    return this.data ?? [];
+    return this.files ?? [];
+  }
+
+  override hasNextPage(): boolean {
+    if (this.meta?.hasNext === false) {
+      return false;
+    }
+
+    return super.hasNextPage();
   }
 
   nextPageRequestOptions(): PageRequestOptions | null {
-    const currentPage = this.current_page;
+    const currentPage = this.meta?.page ?? 1;
 
     return {
       ...this.options,

@@ -4,7 +4,7 @@
 
 This library provides convenient access to the Autorender REST API from server-side TypeScript or JavaScript.
 
-The REST API documentation can be found on [autorender.mintlify.app](https://autorender.mintlify.app/). The full API of this library can be found in [api.md](api.md).
+The REST API documentation can be found on [autorender.io](https://autorender.io/docs). The full API of this library can be found in [api.md](api.md).
 
 ## Installation
 
@@ -24,9 +24,10 @@ const client = new Autorender({
   apiKey: process.env['AUTORENDER_API_KEY'], // This is the default and can be omitted
 });
 
-const files = await client.files.list({ limit: 10 });
+const page = await client.files.list({ limit: 10 });
+const fileListResponse = page.files[0];
 
-console.log(files.files);
+console.log(fileListResponse.id);
 ```
 
 ### Request & Response types
@@ -166,6 +167,37 @@ await client.uploads.create({ file: fs.createReadStream('path/to/file'), file_na
 On timeout, an `APIConnectionTimeoutError` is thrown.
 
 Note that requests which time out will be [retried twice by default](#retries).
+
+## Auto-pagination
+
+List methods in the Autorender API are paginated.
+You can use the `for await … of` syntax to iterate through items across all pages:
+
+```ts
+async function fetchAllFileListResponses(params) {
+  const allFileListResponses = [];
+  // Automatically fetches more pages as needed.
+  for await (const fileListResponse of client.files.list()) {
+    allFileListResponses.push(fileListResponse);
+  }
+  return allFileListResponses;
+}
+```
+
+Alternatively, you can request a single page at a time:
+
+```ts
+let page = await client.files.list();
+for (const fileListResponse of page.files) {
+  console.log(fileListResponse);
+}
+
+// Convenience methods are provided for manually paginating:
+while (page.hasNextPage()) {
+  page = await page.getNextPage();
+  // ...
+}
+```
 
 ## Advanced Usage
 
